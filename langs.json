@@ -1,0 +1,48 @@
+{
+  "common": {
+    "logoff": {
+      "da": "Log af",
+      "en": "Logout"
+    },
+    "saveCurrentView": {
+      "da": "Gem nuværende view",
+      "en": "Save current view"
+    },
+    "search": {
+      "da": "Søg",
+      "en": "Search"
+    }
+  },
+  "topnav": {
+    "leftBurgerMenu": {
+      "adminMenuItem": {
+        "da": "Admin",
+        "en": "Admin"
+      },
+      "usersMenuItem": {
+        "da": "Brugere",
+        "en": "Users"
+      },
+    },
+    "noSavedSearches": {
+      "da": "Ingen gemte søgninger",
+      "en": "No saved searches"
+    },
+    "noSavedViews": {
+      "da": "Ingen gemte views",
+      "en": "No saved views"
+    },
+    "saveCurrentView": {
+      "da": "Gem nuværende view",
+      "en": "Save current view"
+    },
+    "savedSearches": {
+      "da": "Gemte søgninger",
+      "en": "Saved searches"
+    },
+    "savedViews": {
+      "da": "Gemte views",
+      "en": "Saved views"
+    }
+  }
+}

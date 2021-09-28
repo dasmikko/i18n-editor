@@ -1,6 +1,6 @@
 <template>
   <button @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-data-object/> Object
+    <i-ic-round-data-object/> Add Object
   </button>
   <Dialog title="Add Object" v-model="dialogVisible">
     <Grid>

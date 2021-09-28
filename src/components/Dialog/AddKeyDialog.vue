@@ -1,6 +1,6 @@
 <template>
   <button @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-key/> Key
+    <i-ic-round-key/> Add Key
   </button>
   <Dialog title="Add Key" v-model="dialogVisible">
     <Grid>

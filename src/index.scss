@@ -25,6 +25,14 @@ input[type="text"] {
 button {
   @apply bg-purple-500 rounded px-2 py-1 text-white transition text-xs flex items-center justify-between;
 
+  &.outline {
+    @apply border text-purple-500 border-purple-500 bg-transparent;
+
+    &:hover {
+      @apply text-white;
+    }
+  }
+
   &:hover {
     @apply bg-purple-800;
   }

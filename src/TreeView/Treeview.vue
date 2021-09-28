@@ -9,7 +9,7 @@
           v-for="(key, index) in langs"
           :column="index + 2">
         {{key}}
-        <button class="ml-4" @click="onClickDeleteLang(key)">
+        <button class="outline ml-4" @click="onClickDeleteLang(key)">
           <i-ic-round-delete/> Delete
         </button>
       </GridColumn>

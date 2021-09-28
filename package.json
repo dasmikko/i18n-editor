@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "sass": "^1.42.1",
     "vue": "3.2.19"
   },

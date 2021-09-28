@@ -10,7 +10,7 @@
     </div>
 
     <span class="mr-4">
-      {{currentPath.join('.')}}
+      {{currentPath.join('.')}} <i-ic-delete @click="onClickDelete" class="delete-button"/>
     </span>
 
     <div class="mr-1"><AddObjectDialog v-if="isGroupObject" :obj="obj" /></div>
@@ -40,6 +40,8 @@ import Dialog from '../components/Dialog/Dialog.vue'
 import AddKeyDialog from '../components/Dialog/AddKeyDialog.vue'
 import AddObjectDialog from '../components/Dialog/AddObjectDialog.vue'
 import {useLangs} from '../composables/useLangs.js'
+import _unset from 'lodash/unset'
+
 export default {
   name: 'TreeviewRow',
   components: {AddObjectDialog, AddKeyDialog, Dialog, GridColumn},
@@ -78,12 +80,17 @@ export default {
       return false
     })
 
+    const onClickDelete = () => {
+      _unset(langsComposable.langObj.value, currentPath.value.join('.'))
+    }
+
     return {
       rowStyle,
       isCollapsed,
       isGroupObject,
       currentPath,
-      tabByColumn
+      tabByColumn,
+      onClickDelete
     }
   }
 }
@@ -92,6 +99,14 @@ export default {
 <style lang="scss" scoped>
 .fold-button {
   @apply inline-block cursor-pointer;
+}
+
+.delete-button {
+  @apply inline-block text-gray-300 cursor-pointer transition;
+
+  &:hover {
+    @apply text-gray-500;
+  }
 }
 
 </style>

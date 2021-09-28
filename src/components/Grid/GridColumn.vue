@@ -38,6 +38,8 @@ export default {
 
   .grid-column {
     grid-row: auto;
+    display: flex;
+    align-items: center;
   }
 
 </style>

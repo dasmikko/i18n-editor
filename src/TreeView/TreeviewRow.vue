@@ -1,14 +1,20 @@
 <template>
   <GridColumn column="1" :style="rowStyle">
-    <button v-if="isGroupObject" @click="isCollapsed = !isCollapsed">
+    <div class="fold-button" v-if="isGroupObject" @click="isCollapsed = !isCollapsed" >
       <template v-if="!isCollapsed">
-        V
+        <i-ic-outline-arrow-drop-down style="width: 1rem;"/>
       </template>
       <template v-else>
-        >
+        <i-ic-outline-arrow-right style="width: 1rem;"/>
       </template>
-    </button>
-    {{currentPath.join('.')}}
+    </div>
+
+    <span class="mr-4">
+      {{currentPath.join('.')}}
+    </span>
+
+    <div class="mr-1"><AddObjectDialog v-if="isGroupObject" :obj="obj" /></div>
+    <AddKeyDialog v-if="isGroupObject" :obj="obj"/>
   </GridColumn>
   <template v-if="isGroupObject && !isCollapsed">
     <TreeviewRow
@@ -21,7 +27,7 @@
     <GridColumn
         v-for="(key, index) in Object.keys(obj)"
         :column="index + 2">
-      <input v-model="obj[key]">
+      <input type="text" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
     </GridColumn>
   </template>
 
@@ -30,9 +36,13 @@
 <script>
 import GridColumn from '../components/Grid/GridColumn.vue'
 import {computed, ref} from 'vue'
+import Dialog from '../components/Dialog/Dialog.vue'
+import AddKeyDialog from '../components/Dialog/AddKeyDialog.vue'
+import AddObjectDialog from '../components/Dialog/AddObjectDialog.vue'
+import {useLangs} from '../composables/useLangs.js'
 export default {
   name: 'TreeviewRow',
-  components: {GridColumn},
+  components: {AddObjectDialog, AddKeyDialog, Dialog, GridColumn},
   props: {
     objectKey: String,
     obj: Object,
@@ -43,6 +53,12 @@ export default {
   },
   setup (props) {
     const isCollapsed = ref(false)
+    const langsComposable = useLangs()
+
+    const tabByColumn = computed(() => {
+      console.log(langsComposable.tabDownColumn.value)
+      return langsComposable.tabDownColumn.value
+    })
 
     const rowStyle = computed(() => {
       return {
@@ -55,12 +71,7 @@ export default {
     })
 
     const isGroupObject = computed(() => {
-      console.log(props.obj)
-      console.log(typeof Object.keys(props.obj)[0] )
-
       let firstSubObj = props.obj[Object.keys(props.obj)[0]]
-      console.log(firstSubObj)
-
       if (typeof firstSubObj !== 'string') {
         return true
       }
@@ -71,12 +82,16 @@ export default {
       rowStyle,
       isCollapsed,
       isGroupObject,
-      currentPath
+      currentPath,
+      tabByColumn
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.fold-button {
+  @apply inline-block cursor-pointer;
+}
 
 </style>

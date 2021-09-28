@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app {
+  @apply p-4;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+pre {
+  @apply bg-gray-200 mt-4 p-4;
+}
+
+hr {
+  @apply border-gray-200;
+}
+
+input[type="text"] {
+  @apply w-full border border-gray-300 rounded p-1 shadow;
+}
+
+button {
+  @apply bg-purple-500 rounded px-2 py-1 text-white transition text-xs flex items-center justify-between;
+
+  &:hover {
+    @apply bg-purple-800;
+  }
+
+  svg {
+    @apply inline-block align-middle mr-1;
+  }
+}

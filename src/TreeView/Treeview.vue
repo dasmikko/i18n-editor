@@ -53,7 +53,7 @@ export default {
     })
 
     const onClickDeleteLang = (lang) => {
-      langsComposable.removeLang(lang)
+      if (confirm('Are you sure?')) langsComposable.removeLang(lang)
     }
 
     return {

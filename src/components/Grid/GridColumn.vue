@@ -40,6 +40,10 @@ export default {
     grid-row: auto;
     display: flex;
     align-items: center;
+
+    &.disableFlex {
+      display: block;
+    }
   }
 
 </style>

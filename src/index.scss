@@ -3,22 +3,18 @@
 @tailwind utilities;
 
 #app {
-  @apply p-4;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
 
-pre {
-  @apply bg-gray-200 mt-4 p-4;
-}
 
 hr {
   @apply border-gray-200;
 }
 
-input[type="text"] {
+input[type="text"], textarea {
   @apply w-full border border-gray-300 rounded p-1 shadow;
 }
 
@@ -41,3 +37,4 @@ button {
     @apply inline-block align-middle mr-1;
   }
 }
+

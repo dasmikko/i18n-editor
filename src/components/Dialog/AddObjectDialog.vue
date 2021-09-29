@@ -5,7 +5,7 @@
   <Dialog title="Add Object" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" v-model="inputValue">
+        <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
       </GridColumn>
       <GridColumn column="1" justify="end">
         <button @click="onClickAddObject">Add Object</button>
@@ -16,7 +16,7 @@
 
 <script>
 import Dialog from './Dialog.vue'
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
@@ -35,6 +35,13 @@ export default {
       props.obj[inputValue.value] = {}
       inputValue.value = ''
     }
+
+    watch(
+        dialogVisible,
+        (val) => {
+          if (!val) inputValue.value = ''
+        }
+    )
 
     return {
       dialogVisible,

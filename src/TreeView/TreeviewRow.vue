@@ -1,5 +1,5 @@
 <template>
-  <GridColumn column="1" :style="rowStyle">
+  <GridColumn :column="isGroupObject ? 1 + '/' + (langs.length + 2) : 1" :class="isGroupObject ? 'groupRow' : null" :style="rowStyle">
     <div class="fold-button" v-if="isGroupObject" @click="isCollapsed = !isCollapsed" >
       <template v-if="!isCollapsed">
         <i-ic-outline-arrow-drop-down style="width: 1rem;"/>
@@ -9,12 +9,13 @@
       </template>
     </div>
 
-    <span class="mr-4">
-      {{currentPath.join('.')}} <i-ic-delete @click="onClickDelete" class="delete-button"/>
+    <span class="mr-2">
+      {{currentPath.join('.')}}
     </span>
 
-    <div class="mr-1"><AddObjectDialog v-if="isGroupObject" :obj="obj" /></div>
-    <AddKeyDialog v-if="isGroupObject" :obj="obj"/>
+    <div class="mr-1" v-if="isGroupObject"><AddObjectDialog :obj="obj" /></div>
+    <div class="mr-1" v-if="isGroupObject"><AddKeyDialog :obj="obj"/></div>
+    <i-ic-delete @click="onClickDelete" class="delete-button"/>
   </GridColumn>
   <template v-if="isGroupObject && !isCollapsed">
     <TreeviewRow
@@ -58,7 +59,6 @@ export default {
     const langsComposable = useLangs()
 
     const tabByColumn = computed(() => {
-      console.log(langsComposable.tabDownColumn.value)
       return langsComposable.tabDownColumn.value
     })
 
@@ -81,7 +81,7 @@ export default {
     })
 
     const onClickDelete = () => {
-      _unset(langsComposable.langObj.value, currentPath.value.join('.'))
+      if (confirm('Are you sure?')) _unset(langsComposable.langObj.value, currentPath.value.join('.'))
     }
 
     return {
@@ -90,19 +90,25 @@ export default {
       isGroupObject,
       currentPath,
       tabByColumn,
-      onClickDelete
+      onClickDelete,
+      langs: langsComposable.langs
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.groupRow {
+  @apply bg-gray-100 rounded py-2;
+}
+
 .fold-button {
   @apply inline-block cursor-pointer;
 }
 
 .delete-button {
-  @apply inline-block text-gray-300 cursor-pointer transition;
+  @apply inline-block text-gray-400 cursor-pointer transition;
 
   &:hover {
     @apply text-gray-500;

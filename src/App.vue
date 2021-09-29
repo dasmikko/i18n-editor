@@ -1,14 +1,34 @@
 <template>
-  <div class="options">
-    <label for="tabbycolumn">
-      <input type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
-    </label>
+  <div class="p-4" v-if="Object.keys(langs).length">
+    <div class="options">
+      <LoadJsonDialog/>
 
-    <AddLangDialog />
+      <label for="tabbycolumn">
+        <input type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
+      </label>
+
+      <AddLangDialog />
+    </div>
+
+    <Treeview :obj="langs"/>
+
+
+    <p class="font-bold text-xl">JSON</p>
+    <div class="preview">
+      <div class="copy-to-clipboard" @click="copyToClipboard">
+        <i-ic-baseline-content-copy/>
+      </div>
+      <pre>{{langs}}</pre>
+    </div>
   </div>
 
-  <Treeview :obj="langs"/>
-  <pre class="rounded">{{langs}}</pre>
+  <!-- No JSON loaded -->
+  <div v-else class="w-screen h-screen flex items-center align-center justify-center">
+    <div class="text-center">
+      <p class="font-bold mb-2" style="font-size: 2rem;">i18n Editor</p>
+      <LoadJsonDialog/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,10 +41,12 @@ import Treeview from "./TreeView/Treeview.vue";
 import {computed, customRef, onMounted, ref, watch} from 'vue'
 import {useLangs} from './composables/useLangs.js'
 import AddLangDialog from './components/Dialog/AddLangDialog.vue'
+import LoadJsonDialog from './components/Dialog/LoadJsonDialog.vue'
 
 export default {
   name: 'App',
   components: {
+    LoadJsonDialog,
     AddLangDialog,
     Treeview,
     HelloWorld,
@@ -36,57 +58,14 @@ export default {
     const tabByColumn = ref(false)
 
     onMounted(() => {
-      langsComposable.langObj.value = {
-        "common": {
-          "logoff": {
-            "da": "Log af",
-            "en": "Logout"
-          },
-          "saveCurrentView": {
-            "da": "Gem nuværende view",
-            "en": "Save current view"
-          },
-          "search": {
-            "da": "Søg",
-            "en": "Search"
-          }
-        },
-        "topnav": {
-          "leftBurgerMenu": {
-            "adminMenuItem": {
-              "da": "Admin",
-              "en": "Admin"
-            },
-            "usersMenuItem": {
-              "da": "Brugere",
-              "en": "Users"
-            },
-          },
-          "noSavedSearches": {
-            "da": "Ingen gemte søgninger",
-            "en": "No saved searches"
-          },
-          "noSavedViews": {
-            "da": "Ingen gemte views",
-            "en": "No saved views"
-          },
-          "saveCurrentView": {
-            "da": "Gem nuværende view",
-            "en": "Save current view"
-          },
-          "savedSearches": {
-            "da": "Gemte søgninger",
-            "en": "Saved searches"
-          },
-          "savedViews": {
-            "da": "Gemte views",
-            "en": "Saved views"
-          }
-        }
-      }
-
       langsComposable.findExistingLangs()
     })
+
+    const copyToClipboard = async () => {
+
+      await navigator.clipboard.writeText(JSON.stringify(langsComposable.langObj.value))
+      console.log(await navigator.clipboard.readText())
+    }
 
     watch(
         tabByColumn,
@@ -97,7 +76,8 @@ export default {
 
     return {
       langs: langsComposable.langObj,
-      tabByColumn
+      tabByColumn,
+      copyToClipboard
     }
   }
 }
@@ -107,11 +87,35 @@ export default {
 
 
 <style lang="scss">
+
+  .preview {
+    @apply relative  mt-4 rounded;
+
+
+
+    .copy-to-clipboard {
+      @apply absolute right-0 top-0 p-4 bg-gray-300 rounded cursor-pointer transition select-none;
+
+      &:hover {
+        @apply bg-gray-400;
+      }
+    }
+
+    pre {
+      max-height: 200px;
+      @apply p-4 bg-gray-200 overflow-auto rounded;
+    }
+  }
+
   .options {
     @apply flex mb-8;
 
     label {
       @apply bg-purple-500 text-white rounded p-2 select-none cursor-pointer mr-4;
+    }
+
+    button {
+      @apply mr-4;
     }
   }
 

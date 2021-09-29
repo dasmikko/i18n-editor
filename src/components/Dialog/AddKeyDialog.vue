@@ -5,7 +5,7 @@
   <Dialog title="Add Key" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" v-model="inputValue">
+        <input type="text" v-model="inputValue" @keypress.enter="onClickAddKey">
       </GridColumn>
       <GridColumn column="1" justify="end">
         <button @click="onClickAddKey">Add key</button>
@@ -16,7 +16,7 @@
 
 <script>
 import Dialog from './Dialog.vue'
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
@@ -44,6 +44,13 @@ export default {
 
       inputValue.value = ''
     }
+
+    watch(
+        dialogVisible,
+        (val) => {
+          if (!val) inputValue.value = ''
+        }
+    )
 
     return {
       dialogVisible,

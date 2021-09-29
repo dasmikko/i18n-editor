@@ -52,6 +52,7 @@ export default {
 
 
     const onClickAddKey = () => {
+      if (!inputValue.value || !jsonIsValid.value) return
       dialogVisible.value = false
 
       langsComposable.langObj.value = JSON.parse(inputValue.value)

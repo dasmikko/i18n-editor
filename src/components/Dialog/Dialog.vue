@@ -34,11 +34,11 @@ export default {
 
 <style lang="scss" scoped>
   .dialog-bg {
-    @apply fixed w-screen h-screen bg-black opacity-30;
+    @apply fixed w-screen h-screen bg-black opacity-30 z-20;
   }
 
   .dialog {
-    @apply absolute left-1/2 top-1/2 block bg-white rounded p-4 transform -translate-y-1/2 -translate-x-1/2 shadow-xl;
+    @apply fixed left-1/2 top-1/2 block bg-white rounded p-4 transform -translate-y-1/2 -translate-x-1/2 shadow-xl z-30;
     min-width: 300px;
   }
 </style>

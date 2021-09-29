@@ -31,6 +31,7 @@ export default {
     const inputValue = ref('')
 
     const onClickAddObject = () => {
+      if (!inputValue.value) return
       dialogVisible.value = false
       props.obj[inputValue.value] = {}
       inputValue.value = ''

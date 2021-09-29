@@ -30,8 +30,7 @@ export default {
 
 
     const onClickAddKey = () => {
-      console.log(props.obj)
-      console.log(inputValue.value)
+      if (!inputValue.value) return
       dialogVisible.value = false
 
       langsComposable.addNewLang(inputValue.value)

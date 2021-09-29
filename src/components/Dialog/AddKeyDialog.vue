@@ -33,8 +33,7 @@ export default {
 
 
     const onClickAddKey = () => {
-      console.log(props.obj)
-      console.log(inputValue.value)
+      if (!inputValue.value) return
       dialogVisible.value = false
 
       props.obj[inputValue.value] = {}

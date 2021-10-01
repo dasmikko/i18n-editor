@@ -37,6 +37,11 @@ Here is an example of my format for language files:
 
 In my version, each key contains all the languages, making it easier to edit.
 
+[I've made a Gist where I show how to use it in your own Vue.js project.](https://gist.github.com/dasmikko/aa28a4c42312b558a251ab4fc1049f0c)
+
+Don't worry, it's very easy to use my format.
+
+
 ## Goals
 
 - [ ] Support for "old"-style language files

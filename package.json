@@ -7,18 +7,18 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "sass": "^1.42.1",
+    "lodash": "4.17.21",
+    "sass": "1.42.1",
     "vue": "3.2.19"
   },
   "devDependencies": {
-    "@iconify/json": "^1.1.407",
-    "@vitejs/plugin-vue": "^1.9.0",
-    "autoprefixer": "^10.3.6",
-    "postcss": "^8.3.8",
-    "tailwindcss": "^2.2.16",
-    "unplugin-icons": "^0.11.4",
-    "unplugin-vue-components": "^0.15.4",
-    "vite": "^2.5.10"
+    "@iconify/json": "1.1.408",
+    "@vitejs/plugin-vue": "1.9.2",
+    "autoprefixer": "10.3.6",
+    "postcss": "8.3.8",
+    "tailwindcss": "2.2.16",
+    "unplugin-icons": "0.11.4",
+    "unplugin-vue-components": "0.15.6",
+    "vite": "2.6.2"
   }
 }

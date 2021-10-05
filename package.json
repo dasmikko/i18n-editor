@@ -9,7 +9,8 @@
   "dependencies": {
     "lodash": "4.17.21",
     "sass": "1.42.1",
-    "vue": "3.2.19"
+    "vue": "3.2.19",
+    "vue-router": "4.0.11"
   },
   "devDependencies": {
     "@iconify/json": "1.1.408",

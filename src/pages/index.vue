@@ -2,7 +2,7 @@
   <div class="w-screen h-screen flex items-center align-center justify-center">
     <div class="text-center">
       <p class="font-bold mb-2" style="font-size: 2rem;">i18n Editor</p>
-      <label for=""><input type="file" multiple accept="application/json"> Select file(s)</label>
+      <input type="file" @change="filesChange" multiple accept="application/json">
       <LoadJsonDialog/>
     </div>
   </div>
@@ -10,7 +10,27 @@
 
 <script>
 export default {
-  name: 'indexPage'
+  name: 'indexPage',
+  setup () {
+
+    const filesChange = (event) => {
+      const files = event.target.files
+
+      console.log(files)
+
+      for (const file of files) {
+        console.log(file)
+
+        let reader = new FileReaderSync()
+        let jsonResult = reader.readAsText(file)
+        consoel.log(jsonResult)
+      }
+    }
+
+    return {
+      filesChange
+    }
+  }
 }
 </script>
 

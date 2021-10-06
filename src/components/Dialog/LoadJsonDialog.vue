@@ -1,6 +1,6 @@
 <template>
   <button @click="dialogVisible = true" tabindex="-1">
-    <i-ic-sharp-upload/> Load i18n JSON
+    <i-ic-sharp-upload/> Paste JSON file
   </button>
   <Dialog title="Load i18n JSON" v-model="dialogVisible">
     <Grid>
@@ -30,6 +30,8 @@ import {computed, ref, watch} from 'vue'
 import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'LoadJsonDialog',
   components: {GridColumn, Grid, Dialog},
@@ -37,6 +39,7 @@ export default {
     obj: Object
   },
   setup (props) {
+    const router = useRouter()
     const dialogVisible = ref(false)
     const inputValue = ref('')
     const langsComposable = useLangs()
@@ -59,6 +62,7 @@ export default {
       langsComposable.findExistingLangs()
 
       inputValue.value = ''
+      router.replace('/editor')
     }
 
     watch(

@@ -1,34 +1,6 @@
 <template>
-  <div class="p-4" v-if="Object.keys(langs).length">
-    <div class="options">
-      <LoadJsonDialog/>
-
-      <label for="tabbycolumn">
-        <input type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
-      </label>
-
-      <AddLangDialog />
-    </div>
-
-    <Treeview :obj="langs"/>
-
-
-    <p class="font-bold text-xl">JSON</p>
-    <div class="preview">
-      <div class="copy-to-clipboard" @click="copyToClipboard">
-        <i-ic-baseline-content-copy/>
-      </div>
-      <pre>{{langs}}</pre>
-    </div>
-  </div>
-
-  <!-- No JSON loaded -->
-  <div v-else class="w-screen h-screen flex items-center align-center justify-center">
-    <div class="text-center">
-      <p class="font-bold mb-2" style="font-size: 2rem;">i18n Editor</p>
-      <LoadJsonDialog/>
-    </div>
-  </div>
+  <router-view>
+  </router-view>
 </template>
 
 <script>

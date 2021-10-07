@@ -1,5 +1,7 @@
 # i18n Editor
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1aee8c22-6b40-4898-a16c-1422037846ea/deploy-status)](https://app.netlify.com/sites/i18n-editor/deploys)
+
 A super simple editor for [vue-18n by kazupon](https://kazupon.github.io/vue-i18n/)
 
 [It is hosted on netlify](https://i18n-editor.netlify.app/ "Screenshot")

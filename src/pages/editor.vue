@@ -27,7 +27,7 @@
 
 <script>
 import {useLangs} from '../composables/useLangs.js'
-import {onMounted, ref, watch} from 'vue'
+import {onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import LoadJsonDialog from '../components/Dialog/LoadJsonDialog.vue'
 import AddLangDialog from '../components/Dialog/AddLangDialog.vue'
 import Treeview from '../TreeView/Treeview.vue'
@@ -35,6 +35,7 @@ import HelloWorld from '../components/HelloWorld.vue'
 import Grid from '../components/Grid/Grid.vue'
 import GridColumn from '../components/Grid/GridColumn.vue'
 import {useRouter} from 'vue-router'
+import saveAs from 'file-saver'
 
 export default {
   name: 'editor',
@@ -51,12 +52,20 @@ export default {
     const tabByColumn = ref(false)
     const router = useRouter()
 
+
+
     onMounted(() => {
       if (Object.keys(langsComposable.langObj.value).length === 0) {
         router.replace('/')
+        return
       }
 
+      document.addEventListener("keydown", onSave);
       langsComposable.findExistingLangs()
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("keydown", onSave);
     })
 
     const copyToClipboard = async () => {
@@ -67,6 +76,17 @@ export default {
 
     const onLoadJsonClick = () => {
       router.replace('/')
+    }
+
+    const onSave = (e) => {
+      if (!(e.keyCode === 83 && e.ctrlKey)) {
+        return;
+      }
+      e.preventDefault();
+
+      let blob = new Blob([JSON.stringify(langsComposable.langObj.value)],
+          { type: "application/json" });
+      saveAs(blob, "langs.json");
     }
 
     watch(
@@ -80,7 +100,8 @@ export default {
       langs: langsComposable.langObj,
       tabByColumn,
       copyToClipboard,
-      onLoadJsonClick
+      onLoadJsonClick,
+      onSave
     }
   }
 }

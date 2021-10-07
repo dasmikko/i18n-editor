@@ -42,12 +42,6 @@ In my version, each key contains all the languages, making it easier to edit.
 Don't worry, it's very easy to use my format.
 
 
-## Goals
-
-- [ ] Support for "old"-style language files
-- [ ] File selection instead of copy and paste
-
-
 ## How to use
 
 ### First time use

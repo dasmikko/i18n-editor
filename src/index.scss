@@ -9,6 +9,17 @@
   color: #2c3e50;
 }
 
+p {
+  @apply mb-2;
+}
+
+a {
+  @apply text-purple-500 transition ;
+
+  &:hover {
+    @apply text-purple-800 underline;
+  }
+}
 
 hr {
   @apply border-gray-200;

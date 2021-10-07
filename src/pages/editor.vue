@@ -52,6 +52,10 @@ export default {
     const router = useRouter()
 
     onMounted(() => {
+      if (Object.keys(langsComposable.langObj.value).length === 0) {
+        router.replace('/')
+      }
+
       langsComposable.findExistingLangs()
     })
 

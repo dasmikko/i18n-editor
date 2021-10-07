@@ -1,4 +1,6 @@
 import {ref} from 'vue'
+import _get from 'lodash/get.js'
+import _set from 'lodash/set.js'
 
 const langObj = ref({})
 const langs = ref([])
@@ -61,6 +63,29 @@ export function useLangs () {
   }
 
 
+  const generateLangFileInNewFormat = (lObj) => {
+    const langKeys = Object.keys(lObj)
+    let mergedLangsObject = {}
+
+    const recursiveTraverse = (obj, currentPath) => {
+      for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+          recursiveTraverse(obj[key], [...currentPath, key])
+        }
+        if (typeof obj[key] === 'string') {
+          langKeys.forEach((langkey) => {
+            const value = _get(lObj[langkey], [...currentPath, key])
+            _set(mergedLangsObject, [...currentPath, key, langkey], value)
+          })
+        }
+      }
+    }
+
+    recursiveTraverse(lObj[langKeys[0]], [])
+    return mergedLangsObject
+  }
+
+
 
   return {
     langObj,
@@ -68,7 +93,8 @@ export function useLangs () {
     tabDownColumn,
     findExistingLangs,
     addNewLang,
-    removeLang
+    removeLang,
+    generateLangFileInNewFormat
 
   }
 }

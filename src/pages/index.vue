@@ -47,6 +47,7 @@ export default {
       const jsonAsString = await readFile(event.target.files[0])
       const json = JSON.parse(jsonAsString)
       langsComposable.langObj.value = json
+      langsComposable.filename.value = event.target.files[0].name
       router.push('/editor')
     }
 
@@ -63,6 +64,7 @@ export default {
 
       const mergedObj = langsComposable.generateLangFileInNewFormat(langs)
       langsComposable.langObj.value = mergedObj
+      langsComposable.filename.value = "i18n.json"
       router.push('/editor')
     }
 

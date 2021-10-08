@@ -10,6 +10,10 @@
       </label>
 
       <AddLangDialog />
+
+      <button @click="saveLanguageFile" tabindex="-1">
+        <i-ic-save/> Save (CTRL+S)
+      </button>
     </div>
 
     <Treeview :obj="langs"/>
@@ -84,9 +88,13 @@ export default {
       }
       e.preventDefault();
 
+      saveLanguageFile()
+    }
+
+    const saveLanguageFile = () => {
       let blob = new Blob([JSON.stringify(langsComposable.langObj.value)],
           { type: "application/json" });
-      saveAs(blob, "langs.json");
+      saveAs(blob, langsComposable.filename.value);
     }
 
     watch(
@@ -101,7 +109,8 @@ export default {
       tabByColumn,
       copyToClipboard,
       onLoadJsonClick,
-      onSave
+      onSave,
+      saveLanguageFile
     }
   }
 }

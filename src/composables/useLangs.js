@@ -2,6 +2,7 @@ import {ref} from 'vue'
 import _get from 'lodash/get.js'
 import _set from 'lodash/set.js'
 
+const filename = ref('i18n.json')
 const langObj = ref({})
 const langs = ref([])
 const tabDownColumn = ref(false)
@@ -88,6 +89,7 @@ export function useLangs () {
 
 
   return {
+    filename,
     langObj,
     langs,
     tabDownColumn,

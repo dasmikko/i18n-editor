@@ -6,6 +6,7 @@
       <div class="option-card">
         <label for="newFormatFile">Load language file in new format</label>
         <p><a target="_blank" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
+        <button @click="selectFile">Select file</button>
         <input id="newFormatFile" type="file" @change="newFormatFileChange" accept="application/json">
       </div>
 
@@ -50,6 +51,29 @@ export default {
       router.push('/editor')
     }
 
+    const selectFile = async () => {
+      const pickerOpts = {
+        types: [
+          {
+            description: 'i18n json files',
+            accept: {
+              'application/json': ['.json']
+            }
+          },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: true
+      };
+
+      const fileHandle = await window.showOpenFilePicker(pickerOpts);
+      // get file contents
+
+      const fileData = await fileHandle[0].getFile();
+      const json = JSON.parse(await readFile(fileData))
+      langsComposable.langObj.value = json
+      router.push('/editor')
+    }
+
 
     const mergeFilesChange = async (event) => {
       let langs = {}
@@ -68,7 +92,8 @@ export default {
 
     return {
       mergeFilesChange,
-      newFormatFileChange
+      newFormatFileChange,
+      selectFile
     }
   }
 }

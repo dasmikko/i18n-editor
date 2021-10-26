@@ -6,6 +6,8 @@ const filename = ref('i18n.json')
 const langObj = ref({})
 const langs = ref([])
 const tabDownColumn = ref(false)
+const fileHandler = ref(null)
+const isMergingFiles = ref(false)
 
 export function useLangs () {
 
@@ -96,7 +98,8 @@ export function useLangs () {
     findExistingLangs,
     addNewLang,
     removeLang,
-    generateLangFileInNewFormat
-
+    generateLangFileInNewFormat,
+    fileHandler,
+    isMergingFiles
   }
 }

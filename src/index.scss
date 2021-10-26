@@ -9,6 +9,10 @@
   color: #2c3e50;
 }
 
+#dialogContainer {
+  z-index: 100;
+}
+
 p {
   @apply mb-2;
 }

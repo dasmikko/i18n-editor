@@ -7,7 +7,6 @@
         <label for="newFormatFile">Load language file in new format</label>
         <p><a target="_blank" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
         <button @click="selectFile">Select file</button>
-        <input id="newFormatFile" type="file" @change="newFormatFileChange" accept="application/json">
       </div>
 
       <p class="mt-6 mb-6 text-gray-400 font-bold">OR</p>
@@ -15,7 +14,7 @@
       <div class="option-card">
         <label for="mergeFiles">Merge language files</label>
         <p>It expects that the filename is the key for the language, like: da.json, en.json</p>
-        <input id="mergeFiles" type="file" @change="mergeFilesChange" multiple accept="application/json">
+        <button @click="selectFilesToMerge">Select files</button>
       </div>
     </div>
   </div>
@@ -44,19 +43,35 @@ export default {
       })
     }
 
-    const newFormatFileChange = async (event) => {
-      const jsonAsString = await readFile(event.target.files[0])
-      const json = JSON.parse(jsonAsString)
-      langsComposable.langObj.value = json
-      langsComposable.filename.value = event.target.files[0].name
-      router.push('/editor')
-    }
-
     const selectFile = async () => {
       const pickerOpts = {
         types: [
           {
-            description: 'i18n json files',
+            description: 'i18n json file',
+            accept: {
+              'application/json': ['.json']
+            }
+          },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+      };
+
+      langsComposable.fileHandler.value = await window.showOpenFilePicker(pickerOpts);
+      // get file contents
+
+      const fileData = await langsComposable.fileHandler.value[0].getFile();
+      const json = JSON.parse(await readFile(fileData))
+      langsComposable.langObj.value = json
+      langsComposable.isMergingFiles.value = false
+      await router.push('/editor')
+    }
+
+    const selectFilesToMerge = async () => {
+      const pickerOpts = {
+        types: [
+          {
+            description: 'i18n json files to merge',
             accept: {
               'application/json': ['.json']
             }
@@ -66,22 +81,14 @@ export default {
         multiple: true
       };
 
-      const fileHandle = await window.showOpenFilePicker(pickerOpts);
+      langsComposable.fileHandler.value = await window.showOpenFilePicker(pickerOpts);
+      const files = langsComposable.fileHandler.value
       // get file contents
 
-      const fileData = await fileHandle[0].getFile();
-      const json = JSON.parse(await readFile(fileData))
-      langsComposable.langObj.value = json
-      router.push('/editor')
-    }
-
-
-    const mergeFilesChange = async (event) => {
       let langs = {}
-      const files = event.target.files
-
       for (const file of files) {
-        const jsonAsString = await readFile(file)
+        const fileData = await file.getFile();
+        const jsonAsString = await readFile(fileData)
         const json = JSON.parse(jsonAsString)
         langs[file.name.split('.')[0]] = json
       }
@@ -89,13 +96,14 @@ export default {
       const mergedObj = langsComposable.generateLangFileInNewFormat(langs)
       langsComposable.langObj.value = mergedObj
       langsComposable.filename.value = "i18n.json"
+      langsComposable.isMergingFiles.value = true
       router.push('/editor')
     }
 
+
     return {
-      mergeFilesChange,
-      newFormatFileChange,
-      selectFile
+      selectFile,
+      selectFilesToMerge
     }
   }
 }

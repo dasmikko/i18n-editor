@@ -91,10 +91,38 @@ export default {
       saveLanguageFile()
     }
 
-    const saveLanguageFile = () => {
+    const saveLanguageFile = async () => {
       let blob = new Blob([JSON.stringify(langsComposable.langObj.value)],
           { type: "application/json" });
-      saveAs(blob, langsComposable.filename.value);
+
+      let fileHandler = null
+
+      if (langsComposable.isMergingFiles.value) {
+        // create a new handle
+        const pickerOpts = {
+          name: langsComposable.filename,
+          types: [
+            {
+              description: 'i18n json file',
+              accept: {
+                'application/json': ['.json']
+              }
+            },
+          ],
+        };
+
+        langsComposable.fileHandler.value = [await window.showSaveFilePicker(pickerOpts)];
+        langsComposable.isMergingFiles.value = false
+      }
+
+      // create a FileSystemWritableFileStream to write to
+      const writableStream = await langsComposable.fileHandler.value[0].createWritable();
+
+      // write our file
+      await writableStream.write(blob);
+
+      // close the file and write the contents to disk.
+      await writableStream.close();
     }
 
     watch(

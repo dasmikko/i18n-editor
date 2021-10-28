@@ -3,9 +3,10 @@
   <Dialog title="Rename" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" v-model="inputValue" @keypress.enter="onClickAddKey">
+        <input type="text" ref="textInputRef" v-model="inputValue" @keypress.enter="onClickAddKey">
       </GridColumn>
       <GridColumn column="1" justify="end">
+        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
         <button @click="onClickRename">Rename</button>
       </GridColumn>
     </Grid>
@@ -14,7 +15,7 @@
 
 <script>
 import Dialog from './Dialog.vue'
-import {ref, watch} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
@@ -33,7 +34,6 @@ export default {
     const dialogVisible = ref(false)
     const inputValue = ref(props.currentPath[props.currentPath.length - 1])
     const langsComposable = useLangs()
-    const oldKey = props.currentPath[props.currentPath.length - 1]
 
     const onClickRename = () => {
       if (!inputValue.value) return

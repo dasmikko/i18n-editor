@@ -8,6 +8,7 @@
         <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
       </GridColumn>
       <GridColumn column="1" justify="end">
+        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
         <button @click="onClickAddObject">Add Object</button>
       </GridColumn>
     </Grid>

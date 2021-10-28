@@ -22,7 +22,7 @@
         <AddObjectDialog :obj="obj"/>
       </GridColumn>
       <TreeviewRow
-          v-for="key in Object.keys(obj)"
+          v-for="key in Object.keys(sortedObj)"
           :objectKey="key"
           :obj="obj[key]" />
     </Grid>
@@ -37,6 +37,7 @@ import TreeviewRow from './TreeviewRow.vue'
 import {useLangs} from '../composables/useLangs.js'
 import {computed} from 'vue'
 import AddObjectDialog from '../components/Dialog/AddObjectDialog.vue'
+import __ from 'lodash'
 export default {
   name: "Treeview",
   components: {AddObjectDialog, TreeviewRow, GridColumn, Grid},
@@ -46,10 +47,14 @@ export default {
       default: {}
     },
   },
-  setup () {
+  setup (props) {
     const langsComposable = useLangs()
     const langs = computed(() => {
       return langsComposable.langs.value
+    })
+
+    const sortedObj = computed(() => {
+      return __(props.obj).toPairs().sortBy(0).fromPairs().value()
     })
 
     const onClickDeleteLang = (lang) => {
@@ -58,6 +63,7 @@ export default {
 
     return {
       langs,
+      sortedObj,
       onClickDeleteLang
     }
   }

@@ -1,5 +1,11 @@
 <template>
-  <GridColumn :column="isGroupObject ? 1 + '/' + (langs.length + 2) : 1" :class="isGroupObject ? 'groupRow' : null" :style="rowStyle">
+  <GridColumn
+      :column="isGroupObject ? 1 + '/' + (langs.length + 2) : 1"
+      :class="isGroupObject ? 'groupRow' : null"
+      :style="rowStyle"
+      @drop="onDrop"
+      @dragover.prevent
+      @dragenter.prevent>
     <div class="fold-button" v-if="isGroupObject" @click="isCollapsed = !isCollapsed" >
       <template v-if="!isCollapsed">
         <i-ic-outline-arrow-drop-down style="width: 1rem;"/>
@@ -9,25 +15,33 @@
       </template>
     </div>
 
-    <span class="mr-2">
+    <span
+        class="mr-2"
+        draggable="true"
+        @dragstart="onDrag">
       {{currentPath.join('.')}}
     </span>
 
     <div class="mr-1" v-if="isGroupObject"><AddObjectDialog :obj="obj" /></div>
     <div class="mr-1" v-if="isGroupObject"><AddKeyDialog :obj="obj"/></div>
     <i-ic-delete @click="onClickDelete" class="delete-button"/>
+    <div class="mr-1"><RenameDialog :obj="obj" :currentPath="currentPath"/></div>
   </GridColumn>
   <template v-if="isGroupObject && !isCollapsed">
     <TreeviewRow
-        v-for="key in Object.keys(obj)"
+        v-for="key in Object.keys(sortedObj)"
         :parent-path="currentPath"
         :objectKey="key"
-        :obj="obj[key]" />
+        :obj="obj[key]"
+        />
   </template>
   <template v-if="!isGroupObject">
     <GridColumn
-        v-for="(key, index) in Object.keys(obj)"
-        :column="index + 2">
+        v-for="(key, index) in Object.keys(sortedObj)"
+        :column="index + 2"
+        @drop="onDrop"
+        @dragover.prevent
+        @dragenter.prevent>
       <input type="text" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
     </GridColumn>
   </template>
@@ -39,13 +53,16 @@ import GridColumn from '../components/Grid/GridColumn.vue'
 import {computed, ref} from 'vue'
 import Dialog from '../components/Dialog/Dialog.vue'
 import AddKeyDialog from '../components/Dialog/AddKeyDialog.vue'
+import RenameDialog from '../components/Dialog/RenameDialog.vue'
 import AddObjectDialog from '../components/Dialog/AddObjectDialog.vue'
 import {useLangs} from '../composables/useLangs.js'
 import _unset from 'lodash/unset'
+import _set from 'lodash/set'
+import __ from 'lodash'
 
 export default {
   name: 'TreeviewRow',
-  components: {AddObjectDialog, AddKeyDialog, Dialog, GridColumn},
+  components: {AddObjectDialog, AddKeyDialog, Dialog, GridColumn, RenameDialog},
   props: {
     objectKey: String,
     obj: Object,
@@ -84,6 +101,36 @@ export default {
       if (confirm('Are you sure?')) _unset(langsComposable.langObj.value, currentPath.value.join('.'))
     }
 
+    const onDrag = (ev) => {
+      ev.dataTransfer.dropEffect = 'move'
+      ev.dataTransfer.effectAllowed = 'move'
+      ev.dataTransfer.setData('objData', JSON.stringify({
+        path: currentPath.value,
+        key: props.objectKey,
+        obj: props.obj
+      }))
+    }
+
+    const onDrop = (ev) => {
+      const droppedObjData = JSON.parse(ev.dataTransfer.getData('objData'))
+
+      // Add dropped object to new path. Use parent path if not a group object
+      if (isGroupObject.value) {
+        _set(langsComposable.langObj.value, [...currentPath.value, droppedObjData.key].join('.'), droppedObjData.obj)
+      } else {
+        let parentPath = [...currentPath.value]
+        parentPath.pop()
+        _set(langsComposable.langObj.value, [...parentPath, droppedObjData.key].join('.'), droppedObjData.obj)
+      }
+
+      // Remove old object
+      _unset(langsComposable.langObj.value, droppedObjData.path.join('.'))
+    }
+
+    const sortedObj = computed(() => {
+      return __(props.obj).toPairs().sortBy(0).fromPairs().value()
+    })
+
     return {
       rowStyle,
       isCollapsed,
@@ -91,7 +138,10 @@ export default {
       currentPath,
       tabByColumn,
       onClickDelete,
-      langs: langsComposable.langs
+      onDrag,
+      onDrop,
+      langs: langsComposable.langs,
+      sortedObj
     }
   }
 }
@@ -107,8 +157,8 @@ export default {
   @apply inline-block cursor-pointer;
 }
 
-.delete-button {
-  @apply inline-block text-gray-400 cursor-pointer transition;
+.delete-button, .rename-button {
+  @apply mr-1 inline-block text-gray-400 cursor-pointer transition;
 
   &:hover {
     @apply text-gray-500;

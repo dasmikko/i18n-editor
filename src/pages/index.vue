@@ -24,6 +24,7 @@
 import mergeWith from 'lodash/mergeWith'
 import _set from 'lodash/set'
 import _get from 'lodash/get'
+import __ from 'lodash'
 import { useLangs } from '../composables/useLangs.js'
 import {useRouter} from 'vue-router'
 

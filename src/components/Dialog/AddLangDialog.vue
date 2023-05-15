@@ -1,7 +1,8 @@
 <template>
-  <button @click="dialogVisible = true" tabindex="-1">
+  <button class="btn gap-2" @click="dialogVisible = true" tabindex="-1">
     <i-ic-round-language/> Add language
   </button>
+
   <Dialog title="Add Language" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">

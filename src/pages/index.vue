@@ -1,21 +1,31 @@
 <template>
   <div class="w-screen h-screen flex items-center align-center justify-center">
-    <div class="text-center">
+    <div>
       <p class="font-bold mb-4" style="font-size: 2rem;">i18n Editor</p>
 
-      <div class="option-card">
-        <label for="newFormatFile">Load language file in new format</label>
-        <p><a target="_blank" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
-        <button @click="selectFile">Select file</button>
+      <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+              <h2 class="card-title">Load language file in new format</h2>
+              If you already are using the new file format, just select it.
+              <p><a target="_blank" class="link link-primary" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
+              <div class="card-actions justify-end">
+                  <button class="btn btn-primary" @click="selectFile">Select file</button>
+              </div>
+          </div>
       </div>
 
-      <p class="mt-6 mb-6 text-gray-400 font-bold">OR</p>
+      <div class="divider py-8">OR</div>
 
-      <div class="option-card">
-        <label for="mergeFiles">Merge language files</label>
-        <p>It expects that the filename is the key for the language, like: da.json, en.json</p>
-        <button @click="selectFilesToMerge">Select files</button>
+      <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+              <h2 class="card-title">Merge language files</h2>
+              <p>It expects that the filename is the key for the language, like: da.json, en.json</p>
+              <div class="card-actions justify-end">
+                  <button class="btn" @click="selectFilesToMerge">Select files</button>
+              </div>
+          </div>
       </div>
+
     </div>
   </div>
 </template>

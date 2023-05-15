@@ -1,5 +1,5 @@
 <template>
-  <button @click="dialogVisible = true" tabindex="-1">
+  <button class="btn btn-xs gap-2" @click="dialogVisible = true" tabindex="-1">
     <i-ic-round-data-object/> Add Object
   </button>
   <Dialog title="Add Object" v-model="dialogVisible">
@@ -8,8 +8,8 @@
         <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
       </GridColumn>
       <GridColumn column="1" justify="end">
-        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
-        <button @click="onClickAddObject">Add Object</button>
+        <button class="btn btn-sm gap-2" @click="dialogVisible = false">Cancel</button>
+        <button class="btn btn-sm gap-2" @click="onClickAddObject">Add Object</button>
       </GridColumn>
     </Grid>
   </Dialog>

@@ -1,17 +1,17 @@
 <template>
-  <div class="p-4" v-if="Object.keys(langs).length">
-    <div class="options">
-      <button @click="onLoadJsonClick" tabindex="-1">
+  <div class="p-2" v-if="Object.keys(langs).length">
+    <div class="options flex">
+      <button class="btn gap-2" @click="onLoadJsonClick" tabindex="-1">
         <i-ic-sharp-upload/> Load i18n JSON
       </button>
 
-      <label for="tabbycolumn">
-        <input type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
+      <label for="tabbycolumn" class="btn gap-2">
+        <input class="btn" type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
       </label>
 
       <AddLangDialog />
 
-      <button @click="saveLanguageFile" tabindex="-1">
+      <button class="btn gap-2" @click="saveLanguageFile" tabindex="-1">
         <i-ic-save/> Save (CTRL+S)
       </button>
     </div>
@@ -144,6 +144,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+ .options {
+   @apply mb-8;
+   & > * {
+     @apply mr-4;
+   }
+ }
 </style>

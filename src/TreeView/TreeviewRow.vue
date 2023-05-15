@@ -1,7 +1,7 @@
 <template>
   <GridColumn
       :column="isGroupObject ? 1 + '/' + (langs.length + 2) : 1"
-      :class="isGroupObject ? 'groupRow' : null"
+      :class="isGroupObject ? 'groupRow' : 'groupLine'"
       :style="rowStyle"
       @drop="onDrop"
       @dragover.prevent
@@ -19,7 +19,7 @@
         class="mr-2"
         draggable="true"
         @dragstart="onDrag">
-      {{currentPath.join('.')}}
+      {{objectKey}}
     </span>
 
     <div class="mr-1" v-if="isGroupObject"><AddObjectDialog :obj="obj" /></div>
@@ -42,10 +42,9 @@
         @drop="onDrop"
         @dragover.prevent
         @dragenter.prevent>
-      <input type="text" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
+      <input type="text" class="input input-bordered w-full" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
     </GridColumn>
   </template>
-
 </template>
 
 <script>
@@ -150,7 +149,16 @@ export default {
 <style lang="scss" scoped>
 
 .groupRow {
-  @apply bg-gray-100 rounded py-2;
+  @apply bg-gray-200 rounded mt-4 py-2;
+}
+
+.groupLine {
+  @apply relative;
+  &:before {
+    content: '';
+    height: 200%;
+    @apply absolute -left-4 bg-gray-200 w-1 rounded;
+  }
 }
 
 .fold-button {

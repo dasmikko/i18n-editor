@@ -79,17 +79,5 @@ export default {
     }
   }
 
-  .options {
-    @apply flex mb-8;
-
-    label {
-      @apply bg-purple-500 text-white rounded p-2 select-none cursor-pointer mr-4;
-    }
-
-    button {
-      @apply mr-4;
-    }
-  }
-
 
 </style>

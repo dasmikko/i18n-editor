@@ -6,50 +6,9 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
 
-#dialogContainer {
-  z-index: 100;
-}
-
-p {
-  @apply mb-2;
-}
-
-a {
-  @apply text-purple-500 transition ;
-
-  &:hover {
-    @apply text-purple-800 underline;
-  }
-}
-
-hr {
-  @apply border-gray-200;
-}
-
-input[type="text"], textarea {
-  @apply w-full border border-gray-300 rounded p-1 shadow;
-}
-
-button {
-  @apply bg-purple-500 rounded px-2 py-1 text-white transition text-xs flex items-center justify-between;
-
-  &.outline {
-    @apply border text-purple-500 border-purple-500 bg-transparent;
-
-    &:hover {
-      @apply text-white;
-    }
-  }
-
-  &:hover {
-    @apply bg-purple-800;
-  }
-
-  svg {
-    @apply inline-block align-middle mr-1;
-  }
+html, body {
+  @apply bg-gray-100;
 }
 

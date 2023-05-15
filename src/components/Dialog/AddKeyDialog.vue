@@ -1,5 +1,5 @@
 <template>
-  <button @click="dialogVisible = true" tabindex="-1">
+  <button class="btn btn-xs gap-2" @click="dialogVisible = true" tabindex="-1">
     <i-ic-round-key/> Add Key
   </button>
   <Dialog title="Add Key" v-model="dialogVisible">

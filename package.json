@@ -15,8 +15,11 @@
   },
   "devDependencies": {
     "@iconify/json": "1.1.408",
+    "@nuxtjs/eslint-module": "^4.1.0",
     "@vitejs/plugin-vue": "1.9.2",
     "autoprefixer": "10.3.6",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
     "postcss": "8.3.8",
     "tailwindcss": "2.2.16",
     "unplugin-icons": "0.11.4",

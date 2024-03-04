@@ -1,3 +1,4 @@
 module.exports = {
-  publicPath: '/'
+  publicPath: '/i18n-editor/',
+
 }

@@ -7,10 +7,14 @@ import Pages from "vite-plugin-pages";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/i18n-editor/",
+  base: "/i18n-editor",
   plugins: [
     vue(),
-    Pages(),
+    Pages({
+      dirs: [
+        { dir: 'src/pages', baseRoute: 'i18n-editor' },
+      ]
+    }),
     Components({
       resolvers: IconsResolver(),
     }),

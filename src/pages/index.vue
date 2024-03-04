@@ -65,7 +65,7 @@ export default {
       const json = JSON.parse(await readFile(fileData))
       langsComposable.langObj.value = json
       langsComposable.isMergingFiles.value = false
-      await router.push('/editor')
+      await router.push({ name: 'i18n-editor-editor' })
     }
 
     const selectFilesToMerge = async () => {

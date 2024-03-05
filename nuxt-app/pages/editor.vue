@@ -52,10 +52,12 @@ import {useLangs} from '../composables/useLangs.js'
 import {onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {useRouter} from 'vue-router'
 import saveAs from 'file-saver'
+import Menubar from 'primevue/menubar';
 
 export default {
   name: 'Editor',
   components: {
+    Menubar
   },
   setup () {
     const langsComposable = useLangs()
@@ -137,6 +139,8 @@ export default {
           langsComposable.tabDownColumn.value = tabByColumn.value
         }
     )
+
+
 
     return {
       langs: langsComposable.langObj,

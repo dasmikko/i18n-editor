@@ -9,13 +9,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   modules: [
     '@nuxtjs/eslint-module',
-    ['unplugin-icons/nuxt', {
-
-    }]
   ],
-  eslint: {
-
-  },
   postcss: {
     plugins: {
       'postcss-import': {},

@@ -40,7 +40,6 @@ export default {
     grid-row: auto;
     display: flex;
     align-items: center;
-    @apply py-2 px-2;
 
     &.disableFlex {
       display: block;

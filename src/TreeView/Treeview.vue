@@ -1,31 +1,9 @@
 <template>
   <div class="treeview">
-    <Grid>
-      <GridColumn column="1">
-        Key
-      </GridColumn>
-
-      <GridColumn
-          v-for="(key, index) in langs"
-          :column="index + 2">
-        {{key}}
-        <button class="btn btn-xs btn-outline gap-2 ml-4" @click="onClickDeleteLang(key)">
-          <i-ic-round-delete/> Delete
-        </button>
-      </GridColumn>
-
-      <GridColumn :column="'1 / ' + (langs.length + 2)">
-        <hr class="w-full h-px bg-gray-500">
-      </GridColumn>
-
-      <GridColumn column="1 / 4">
-        <AddObjectDialog :obj="obj"/>
-      </GridColumn>
       <TreeviewRow
           v-for="key in Object.keys(sortedObj)"
           :objectKey="key"
           :obj="obj[key]" />
-    </Grid>
   </div>
 </template>
 

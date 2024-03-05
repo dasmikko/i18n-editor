@@ -1,53 +1,77 @@
 <template>
-  <GridColumn
-      :column="isGroupObject ? 1 + '/' + (langs.length + 2) : 1"
-      :class="isGroupObject ? 'groupRow' : 'groupLine'"
-      :style="rowStyle"
-      @drop="onDrop"
-      @dragover.prevent
-      @dragenter.prevent>
-    <div class="fold-button" v-if="isGroupObject" @click="isCollapsed = !isCollapsed" >
-      <template v-if="!isCollapsed">
-        <i-ic-outline-arrow-drop-down style="width: 1rem;"/>
-      </template>
-      <template v-else>
-        <i-ic-outline-arrow-right style="width: 1rem;"/>
-      </template>
-    </div>
-
-    <span
-        class="mr-2"
-        draggable="true"
-        @dragstart="onDrag">
-      {{objectKey}}
-    </span>
-
-    <div class="mr-1" v-if="isGroupObject"><AddObjectDialog :obj="obj" /></div>
-    <div class="mr-1" v-if="isGroupObject"><AddKeyDialog :obj="obj"/></div>
-    <i-ic-delete @click="onClickDelete" class="delete-button"/>
-    <div class="mr-1"><RenameDialog :obj="obj" :currentPath="currentPath"/></div>
-  </GridColumn>
-  <template v-if="isGroupObject && !isCollapsed">
-    <TreeviewRow
-        v-for="key in Object.keys(sortedObj)"
-        :parent-path="currentPath"
-        :objectKey="key"
-        :obj="obj[key]"
-        />
-  </template>
-  <template v-if="!isGroupObject">
-    <GridColumn
-        v-for="(key, index) in Object.keys(sortedObj)"
-        :column="index + 2"
+  <template v-if="isGroupObject">
+    <div
+        class="w-full rounded bg-gray-200 mb-4 shadow border border-gray-400"
         @drop="onDrop"
         @dragover.prevent
         @dragenter.prevent>
-      <input type="text" class="input input-bordered w-full" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
+      <div class="header flex bg-gray-300 rounded p-2 items-center">
+        <div class="fold-button" v-if="isGroupObject" @click="isCollapsed = !isCollapsed" >
+          <template v-if="!isCollapsed">
+            <i-ic-outline-arrow-drop-down style="width: 1rem;"/>
+          </template>
+          <template v-else>
+            <i-ic-outline-arrow-right style="width: 1rem;"/>
+          </template>
+        </div>
+
+        <span
+            class="mr-2 flex-1 "
+            draggable="true"
+            @dragstart="onDrag">
+          {{currentPath.join('.')}}
+        </span>
+
+        <div class="mr-1"><AddObjectDialog :obj="obj" /></div>
+        <div class="mr-1"><AddKeyDialog :obj="obj"/></div>
+        <i-ic-delete @click="onClickDelete" class="delete-button"/>
+        <div class="mr-1"><RenameDialog :obj="obj" :currentPath="currentPath"/></div>
+      </div>
+
+      <div class="rows p-2">
+        <template v-if="!isCollapsed">
+          <Grid shrink style="grid-template-columns: 100fr 1fr 1fr;">
+            <TreeviewRow
+                v-for="key in Object.keys(sortedObjRowsOnly)"
+                :parent-path="currentPath"
+                :objectKey="key"
+                :obj="obj[key]"
+                @drop="onDrop"
+                @dragover.prevent
+                @dragenter.prevent
+            />
+          </Grid>
+
+          <TreeviewRow
+              v-for="key in Object.keys(sortedObjObjectsOnly)"
+              :parent-path="currentPath"
+              :objectKey="key"
+              :obj="obj[key]"
+          />
+        </template>
+      </div>
+
+    </div>
+  </template>
+
+  <!-- Actual row -->
+  <template  v-if="!isGroupObject">
+    <GridColumn class="w-full" column="1">
+      <span class="mr-2">{{currentPath.join('.')}}</span>
+      <i-ic-delete @click="onClickDelete" class="delete-button"/>
+      <div class="mr-1"><RenameDialog :obj="obj" :currentPath="currentPath"/></div>
+    </GridColumn>
+    <GridColumn class="row"
+        v-for="(key, index) in Object.keys(sortedObj)"
+        :column="index + 2"
+        >
+      <input type="text" class="input input-bordered w-64" v-model="obj[key]" :tabindex="tabByColumn ? index + 1 : null">
     </GridColumn>
   </template>
 </template>
 
 <script>
+import Grid from '../components/Grid/Grid.vue'
 import GridColumn from '../components/Grid/GridColumn.vue'
 import {computed, ref} from 'vue'
 import Dialog from '../components/Dialog/Dialog.vue'
@@ -61,7 +85,7 @@ import __ from 'lodash'
 
 export default {
   name: 'TreeviewRow',
-  components: {AddObjectDialog, AddKeyDialog, Dialog, GridColumn, RenameDialog},
+  components: {Grid, AddObjectDialog, AddKeyDialog, Dialog, GridColumn, RenameDialog},
   props: {
     objectKey: String,
     obj: Object,
@@ -79,8 +103,14 @@ export default {
     })
 
     const rowStyle = computed(() => {
-      return {
-        'margin-left': (currentPath.value.length - 1) + 'rem'
+      if (isGroupObject.value) {
+        return {
+          'margin-left': (currentPath.value.length - 1) + 'rem'
+        }
+      } else {
+        return {
+          'margin-left': (currentPath.value.length - 2) + 'rem'
+        }
       }
     })
 
@@ -130,6 +160,24 @@ export default {
       return __(props.obj).toPairs().sortBy(0).fromPairs().value()
     })
 
+    const sortedObjRowsOnly = computed(() => {
+      return __(props.obj).toPairs().filter((obj) => {
+        let firstSubObj = obj[1][Object.keys(obj[1])[0]]
+        if (typeof firstSubObj === 'string') {
+          return obj
+        }
+      }).sortBy(0).fromPairs().value()
+    })
+
+    const sortedObjObjectsOnly = computed(() => {
+      return __(props.obj).toPairs().filter((obj) => {
+        let firstSubObj = obj[1][Object.keys(obj[1])[0]]
+        if (typeof firstSubObj !== 'string') {
+          return obj
+        }
+      }).sortBy(0).fromPairs().value()
+    })
+
     return {
       rowStyle,
       isCollapsed,
@@ -140,7 +188,9 @@ export default {
       onDrag,
       onDrop,
       langs: langsComposable.langs,
-      sortedObj
+      sortedObj,
+      sortedObjRowsOnly,
+      sortedObjObjectsOnly
     }
   }
 }
@@ -149,16 +199,11 @@ export default {
 <style lang="scss" scoped>
 
 .groupRow {
-  @apply bg-gray-200 rounded mt-4 py-2;
+  @apply bg-gray-300 rounded mt-4 py-2;
 }
 
 .groupLine {
-  @apply relative;
-  &:before {
-    content: '';
-    height: 200%;
-    @apply absolute -left-4 bg-gray-200 w-1 rounded;
-  }
+  @apply relative z-10 border-l-4 border-zinc-300;
 }
 
 .fold-button {

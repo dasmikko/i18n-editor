@@ -1,15 +1,11 @@
 <template>
   <teleport to="#dialogContainer">
     <transition name="dialogTransition">
-      <div class="modal modal-open" v-if="modelValue" id="my-modal-2">
-        <div class="modal-box">
-          <h3 class="font-bold text-lg">{{ title }}</h3>
-          <div class="py-4">
-            <slot></slot>
-          </div>
-          <div class="modal-action">
-            <slot name="actions"></slot>
-          </div>
+      <div v-if="modelValue">
+        <div class="dialog-bg" @click="toggleDialog"></div>
+        <div class="dialog">
+          <p class="mb-2 font-bold">{{title}}</p>
+          <slot></slot>
         </div>
       </div>
     </transition>

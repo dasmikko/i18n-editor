@@ -1,18 +1,17 @@
 <template>
-  <button class="btn btn-xs gap-2" @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-key/> Add Key
+  <button @click="dialogVisible = true" tabindex="-1">
+    <i-ic-round-data-object/> Add Object
   </button>
-  <Dialog title="Add Key" v-model="dialogVisible">
+  <Dialog title="Add Object" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" class="input input-bordered w-full" v-model="inputValue" @keypress.enter="onClickAddKey">
+        <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
+      </GridColumn>
+      <GridColumn column="1" justify="end">
+        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
+        <button @click="onClickAddObject">Add Object</button>
       </GridColumn>
     </Grid>
-
-    <template v-slot:actions>
-      <button class="btn btn-outline mr-2" @click="dialogVisible = false">Cancel</button>
-      <button class="btn btn-primary" @click="onClickAddKey">Add key</button>
-    </template>
   </Dialog>
 </template>
 
@@ -23,7 +22,7 @@ import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
 export default {
-  name: 'AddKeyDialog',
+  name: 'AddObjectDialog',
   components: {GridColumn, Grid, Dialog},
   props: {
     obj: Object
@@ -31,18 +30,11 @@ export default {
   setup (props) {
     const dialogVisible = ref(false)
     const inputValue = ref('')
-    const langsComposable = useLangs()
 
-
-    const onClickAddKey = () => {
+    const onClickAddObject = () => {
       if (!inputValue.value) return
       dialogVisible.value = false
-
       props.obj[inputValue.value] = {}
-      langsComposable.langs.value.forEach(key => {
-        props.obj[inputValue.value][key] = ''
-      })
-
       inputValue.value = ''
     }
 
@@ -56,7 +48,7 @@ export default {
     return {
       dialogVisible,
       inputValue,
-      onClickAddKey
+      onClickAddObject
     }
   }
 }

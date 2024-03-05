@@ -3,13 +3,13 @@
   <Dialog title="Rename" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input class="input input-bordered w-full" type="text" ref="textInputRef" v-model="inputValue" @keypress.enter="onClickAddKey">
+        <input type="text" ref="textInputRef" v-model="inputValue" @keypress.enter="onClickAddKey">
+      </GridColumn>
+      <GridColumn column="1" justify="end">
+        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
+        <button @click="onClickRename">Rename</button>
       </GridColumn>
     </Grid>
-    <template v-slot:actions>
-      <button class="btn btn-outline" @click="dialogVisible = false">Cancel</button>
-      <button class="btn btn-primary" @click="onClickRename">Rename</button>
-    </template>
   </Dialog>
 </template>
 

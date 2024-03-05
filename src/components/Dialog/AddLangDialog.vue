@@ -8,11 +8,12 @@
       <GridColumn column="1">
         <input type="text" v-model="inputValue" @keypress.enter="onClickAddKey">
       </GridColumn>
-      <GridColumn column="1" justify="end">
-        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
-        <button @click="onClickAddKey">Add lang</button>
-      </GridColumn>
     </Grid>
+
+    <template v-slot:actions>
+      <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
+      <button @click="onClickAddKey">Add lang</button>
+    </template>
   </Dialog>
 </template>
 

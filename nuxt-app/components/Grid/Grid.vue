@@ -16,6 +16,7 @@ export default {
 <style lang="scss" scoped>
   .grid {
     display: grid;
+    grid-gap: 1rem 1rem;
     grid-auto-flow: row;
     justify-content: stretch;
 

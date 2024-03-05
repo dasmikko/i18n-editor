@@ -5,13 +5,14 @@
   <Dialog title="Add Object" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
-      </GridColumn>
-      <GridColumn column="1" justify="end">
-        <button class="btn btn-sm gap-2" @click="dialogVisible = false">Cancel</button>
-        <button class="btn btn-sm gap-2" @click="onClickAddObject">Add Object</button>
+        <input type="text" class="input input-bordered w-full" v-model="inputValue" @keypress.enter="onClickAddObject">
       </GridColumn>
     </Grid>
+
+    <template v-slot:actions>
+      <button class="btn btn-outline" @click="dialogVisible = false">Cancel</button>
+      <button class="btn btn-primary" @click="onClickAddObject">Add Object</button>
+    </template>
   </Dialog>
 </template>
 

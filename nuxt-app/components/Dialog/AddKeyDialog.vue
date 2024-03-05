@@ -1,18 +1,17 @@
 <template>
-  <button class="btn btn-xs gap-2" @click="dialogVisible = true" tabindex="-1">
+  <button @click="dialogVisible = true" tabindex="-1">
     <i-ic-round-key/> Add Key
   </button>
   <Dialog title="Add Key" v-model="dialogVisible">
     <Grid>
       <GridColumn column="1">
-        <input type="text" class="input input-bordered w-full" v-model="inputValue" @keypress.enter="onClickAddKey">
+        <input type="text" v-model="inputValue" @keypress.enter="onClickAddKey">
+      </GridColumn>
+      <GridColumn column="1" justify="end">
+        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
+        <button @click="onClickAddKey">Add key</button>
       </GridColumn>
     </Grid>
-
-    <template v-slot:actions>
-      <button class="btn btn-outline mr-2" @click="dialogVisible = false">Cancel</button>
-      <button class="btn btn-primary" @click="onClickAddKey">Add key</button>
-    </template>
   </Dialog>
 </template>
 

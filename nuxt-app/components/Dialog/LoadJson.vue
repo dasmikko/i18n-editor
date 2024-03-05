@@ -1,22 +1,46 @@
 <template>
-  <button @click="dialogVisible = true" tabindex="-1">
-    <i-ic-sharp-upload/> Paste JSON file
+  <button
+    tabindex="-1"
+    @click="dialogVisible = true"
+  >
+    <i-ic-sharp-upload /> Paste JSON file
   </button>
-  <Dialog title="Load i18n JSON" v-model="dialogVisible">
+  <Dialog
+    v-model="dialogVisible"
+    title="Load i18n JSON"
+  >
     <Grid>
       <GridColumn column="1">
-        <textarea type="text" v-model="inputValue" @keypress.enter="onClickAddKey"></textarea>
+        <textarea
+          v-model="inputValue"
+          type="text"
+          @keypress.enter="onClickAddKey"
+        />
       </GridColumn>
-      <GridColumn column="1" class="disableFlex">
+      <GridColumn
+        column="1"
+        class="disableFlex"
+      >
         <Grid>
           <GridColumn column="1">
             <template v-if="inputValue">
-              <span class="text-green-500" v-if="jsonIsValid">JSON is valid!</span>
-              <span class="text-red-500" v-else>JSON NOT valid!</span>
+              <span
+                v-if="jsonIsValid"
+                class="text-green-500"
+              >JSON is valid!</span>
+              <span
+                v-else
+                class="text-red-500"
+              >JSON NOT valid!</span>
             </template>
           </GridColumn>
-          <GridColumn column="2" justify="end">
-            <button @click="onClickAddKey">Load Json</button>
+          <GridColumn
+            column="2"
+            justify="end"
+          >
+            <button @click="onClickAddKey">
+              Load Json
+            </button>
           </GridColumn>
         </Grid>
       </GridColumn>

@@ -1,30 +1,48 @@
 <template>
-  <div class="p-4" v-if="Object.keys(langs).length">
+  <div
+    v-if="Object.keys(langs).length"
+    class="p-4"
+  >
     <div class="options">
-      <button @click="onLoadJsonClick" tabindex="-1">
-        <i-ic-sharp-upload/> Load i18n JSON
+      <button
+        tabindex="-1"
+        @click="onLoadJsonClick"
+      >
+        <i-ic-sharp-upload /> Load i18n JSON
       </button>
 
       <label for="tabbycolumn">
-        <input type="checkbox" id="tabbycolumn" v-model="tabByColumn"> Tab by column
+        <input
+          id="tabbycolumn"
+          v-model="tabByColumn"
+          type="checkbox"
+        > Tab by column
       </label>
 
-      <AddLangDialog />
+      <DialogAddLang />
 
-      <button @click="saveLanguageFile" tabindex="-1">
-        <i-ic-save/> Save (CTRL+S)
+      <button
+        tabindex="-1"
+        @click="saveLanguageFile"
+      >
+        <i-ic-save /> Save (CTRL+S)
       </button>
     </div>
 
-    <Treeview :obj="langs"/>
+    <TreeView :obj="langs" />
 
 
-    <p class="font-bold text-xl">JSON</p>
+    <p class="font-bold text-xl">
+      JSON
+    </p>
     <div class="preview">
-      <div class="copy-to-clipboard" @click="copyToClipboard">
-        <i-ic-baseline-content-copy/>
+      <div
+        class="copy-to-clipboard"
+        @click="copyToClipboard"
+      >
+        <i-ic-baseline-content-copy />
       </div>
-      <pre>{{langs}}</pre>
+      <pre>{{ langs }}</pre>
     </div>
   </div>
 </template>
@@ -32,24 +50,12 @@
 <script>
 import {useLangs} from '../composables/useLangs.js'
 import {onBeforeUnmount, onMounted, ref, watch} from 'vue'
-import LoadJsonDialog from '../components/Dialog/LoadJsonDialog.vue'
-import AddLangDialog from '../components/Dialog/AddLangDialog.vue'
-import Treeview from '../TreeView/Treeview.vue'
-import HelloWorld from '../components/HelloWorld.vue'
-import Grid from '../components/Grid/Grid.vue'
-import GridColumn from '../components/Grid/GridColumn.vue'
 import {useRouter} from 'vue-router'
 import saveAs from 'file-saver'
 
 export default {
-  name: 'editor',
+  name: 'Editor',
   components: {
-    LoadJsonDialog,
-    AddLangDialog,
-    Treeview,
-    HelloWorld,
-    Grid,
-    GridColumn
   },
   setup () {
     const langsComposable = useLangs()
@@ -145,5 +151,10 @@ export default {
 </script>
 
 <style scoped>
-
+.options {
+  @apply mb-8;
+  & > * {
+    @apply mr-4;
+  }
+}
 </style>

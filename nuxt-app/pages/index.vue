@@ -1,20 +1,36 @@
 <template>
   <div class="w-screen h-screen flex items-center align-center justify-center">
     <div class="text-center">
-      <p class="font-bold mb-4" style="font-size: 2rem;">i18n Editor</p>
+      <p
+        class="font-bold mb-4"
+        style="font-size: 2rem;"
+      >
+        i18n Editor
+      </p>
 
       <div class="option-card">
         <label for="newFormatFile">Load language file in new format</label>
-        <p><a target="_blank" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
-        <button @click="selectFile">Select file</button>
+        <p>
+          <a
+            target="_blank"
+            href="https://github.com/dasmikko/i18n-editor#what-is-this"
+          >Read more about the format</a>
+        </p>
+        <button @click="selectFile">
+          Select file
+        </button>
       </div>
 
-      <p class="mt-6 mb-6 text-gray-400 font-bold">OR</p>
+      <p class="mt-6 mb-6 text-gray-400 font-bold">
+        OR
+      </p>
 
       <div class="option-card">
         <label for="mergeFiles">Merge language files</label>
         <p>It expects that the filename is the key for the language, like: da.json, en.json</p>
-        <button @click="selectFilesToMerge">Select files</button>
+        <button @click="selectFilesToMerge">
+          Select files
+        </button>
       </div>
     </div>
   </div>
@@ -29,7 +45,7 @@ import { useLangs } from '../composables/useLangs.js'
 import {useRouter} from 'vue-router'
 
 export default {
-  name: 'indexPage',
+  name: 'IndexPage',
   setup () {
     const langsComposable = useLangs()
     const router = useRouter()

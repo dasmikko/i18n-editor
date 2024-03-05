@@ -1,11 +1,16 @@
 <template>
-  <teleport to="#dialogContainer">
+  <teleport to="body">
     <transition name="dialogTransition">
       <div v-if="modelValue">
-        <div class="dialog-bg" @click="toggleDialog"></div>
+        <div
+          class="dialog-bg"
+          @click="toggleDialog"
+        />
         <div class="dialog">
-          <p class="mb-2 font-bold">{{title}}</p>
-          <slot></slot>
+          <p class="mb-2 font-bold">
+            {{ title }}
+          </p>
+          <slot />
         </div>
       </div>
     </transition>

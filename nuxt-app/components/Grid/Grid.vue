@@ -1,6 +1,9 @@
 <template>
-  <div class="grid" :class="{shrink: shrink}">
-    <slot></slot>
+  <div
+    class="grid"
+    :class="{shrink: shrink}"
+  >
+    <slot />
   </div>
 </template>
 

@@ -10,6 +10,10 @@
     color: #2c3e50;
 }
 
+html, body {
+    @apply bg-gray-100;
+}
+
 #dialogContainer {
     z-index: 100;
 }
@@ -51,5 +55,17 @@ button {
 
     svg {
         @apply inline-block align-middle mr-1;
+    }
+}
+
+.options {
+    @apply flex mb-8;
+
+    label {
+        @apply bg-purple-500 text-white rounded p-2 select-none cursor-pointer mr-4;
+    }
+
+    button {
+        @apply mr-4;
     }
 }

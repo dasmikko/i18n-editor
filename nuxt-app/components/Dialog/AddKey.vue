@@ -1,15 +1,35 @@
 <template>
-  <button @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-data-object/> Add Object
+  <button
+    tabindex="-1"
+    @click="dialogVisible = true"
+  >
+    <i-ic-round-key /> Add Key
   </button>
-  <Dialog title="Add Object" v-model="dialogVisible">
+  <Dialog
+    v-model="dialogVisible"
+    title="Add Key"
+  >
     <Grid>
       <GridColumn column="1">
-        <input type="text" v-model="inputValue" @keypress.enter="onClickAddObject">
+        <input
+          v-model="inputValue"
+          type="text"
+          @keypress.enter="onClickAddKey"
+        >
       </GridColumn>
-      <GridColumn column="1" justify="end">
-        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
-        <button @click="onClickAddObject">Add Object</button>
+      <GridColumn
+        column="1"
+        justify="end"
+      >
+        <button
+          class="outline mr-2"
+          @click="dialogVisible = false"
+        >
+          Cancel
+        </button>
+        <button @click="onClickAddKey">
+          Add key
+        </button>
       </GridColumn>
     </Grid>
   </Dialog>
@@ -22,7 +42,7 @@ import Grid from '../Grid/Grid.vue'
 import GridColumn from '../Grid/GridColumn.vue'
 import {useLangs} from '../../composables/useLangs.js'
 export default {
-  name: 'AddObjectDialog',
+  name: 'AddKeyDialog',
   components: {GridColumn, Grid, Dialog},
   props: {
     obj: Object
@@ -30,11 +50,18 @@ export default {
   setup (props) {
     const dialogVisible = ref(false)
     const inputValue = ref('')
+    const langsComposable = useLangs()
 
-    const onClickAddObject = () => {
+
+    const onClickAddKey = () => {
       if (!inputValue.value) return
       dialogVisible.value = false
+
       props.obj[inputValue.value] = {}
+      langsComposable.langs.value.forEach(key => {
+        props.obj[inputValue.value][key] = ''
+      })
+
       inputValue.value = ''
     }
 
@@ -48,7 +75,7 @@ export default {
     return {
       dialogVisible,
       inputValue,
-      onClickAddObject
+      onClickAddKey
     }
   }
 }

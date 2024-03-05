@@ -1,13 +1,35 @@
 <template>
-  <i-ic-round-drive-file-rename-outline @click="dialogVisible = true" class="rename-button" tabindex="-1"/>
-  <Dialog title="Rename" v-model="dialogVisible">
+  <i-ic-round-drive-file-rename-outline
+    class="rename-button"
+    tabindex="-1"
+    @click="dialogVisible = true"
+  />
+  <Dialog
+    v-model="dialogVisible"
+    title="Rename"
+  >
     <Grid>
       <GridColumn column="1">
-        <input type="text" ref="textInputRef" v-model="inputValue" @keypress.enter="onClickAddKey">
+        <input
+          ref="textInputRef"
+          v-model="inputValue"
+          type="text"
+          @keypress.enter="onClickAddKey"
+        >
       </GridColumn>
-      <GridColumn column="1" justify="end">
-        <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
-        <button @click="onClickRename">Rename</button>
+      <GridColumn
+        column="1"
+        justify="end"
+      >
+        <button
+          class="outline mr-2"
+          @click="dialogVisible = false"
+        >
+          Cancel
+        </button>
+        <button @click="onClickRename">
+          Rename
+        </button>
       </GridColumn>
     </Grid>
   </Dialog>

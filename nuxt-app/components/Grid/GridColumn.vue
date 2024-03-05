@@ -1,6 +1,9 @@
 <template>
-  <div class="grid-column" :style="styleObj">
-    <slot></slot>
+  <div
+    class="grid-column"
+    :style="styleObj"
+  >
+    <slot />
   </div>
 </template>
 

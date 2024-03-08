@@ -1,8 +1,11 @@
 <template>
-  <NuxtPage />
+  <div class="container mx-auto pt-4">
+    <NuxtPage />
+  </div>
 </template>
 
 <script setup lang="ts">
+import 'primeicons/primeicons.css'
 </script>
 
 <style>

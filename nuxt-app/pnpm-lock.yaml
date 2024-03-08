@@ -8,6 +8,9 @@ dependencies:
   nuxt:
     specifier: ^3.10.3
     version: 3.10.3(eslint@8.57.0)(sass@1.71.1)(vite@5.1.5)
+  primevue:
+    specifier: ^3.49.1
+    version: 3.49.1(vue@3.4.21)
   vue:
     specifier: ^3.4.19
     version: 3.4.21
@@ -5539,6 +5542,14 @@ packages:
   /pretty-bytes@6.1.1:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
+
+  /primevue@3.49.1(vue@3.4.21):
+    resolution: {integrity: sha512-OmUTqbKbPB63Zqf7uA49cipDi+Qh+/13AYJPwgvsVsI4QmAKIkeibBwkOgj1CNIFlopfF79YmyBshFUAPqlw9A==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.4.21
     dev: false
 
   /proc-log@3.0.0:

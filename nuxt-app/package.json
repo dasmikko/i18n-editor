@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "nuxt": "^3.10.3",
+    "primevue": "^3.49.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },

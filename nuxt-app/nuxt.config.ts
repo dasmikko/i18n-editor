@@ -6,10 +6,15 @@ import path from 'path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
   components: true,
   css: ['~/assets/css/main.css'],
+  imports: {
+    dirs: [
+      'composables/*/index.{ts,js,mjs,mts}',
+    ]
+  },
   modules: [
-    '@nuxtjs/eslint-module',
     'nuxt-primevue'
   ],
   primevue: {

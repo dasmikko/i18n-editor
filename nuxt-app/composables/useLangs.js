@@ -1,105 +1,94 @@
-import {ref} from 'vue'
-import _get from 'lodash/get.js'
-import _set from 'lodash/set.js'
-
-const filename = ref('i18n.json')
-const langObj = ref({})
-const langs = ref([])
-const tabDownColumn = ref(false)
+import {ref, computed} from 'vue'
 const fileHandler = ref(null)
-const isMergingFiles = ref(false)
+const languages = ref([])
+const selectedTreeNode = ref({'Root': true})
 
-export function useLangs () {
+export function useLangs() {
 
-  const searchObjectForLangs = (object, currentPath) => {
-    for (let key in object) {
-      if (langObj.value.length > 0) return
-      if (typeof object[key] === 'object') {
-        searchObjectForLangs(object[key], [...currentPath, key])
-      }
-      if (typeof object[key] === 'string') {
-        langs.value = Object.keys(object)
-        return
-      }
+
+  const readFile = (file) => {
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader()
+      reader.onload = function(evt) {
+        resolve(evt.target.result)
+      };
+      reader.readAsText(file)
+    })
+  }
+
+  const selectFiles = async () => {
+    const pickerOpts = {
+      types: [
+        {
+          description: 'i18n json files',
+          accept: {
+            'application/json': ['.json']
+          }
+        },
+      ],
+      excludeAcceptAllOption: true,
+      multiple: true
+    };
+
+    // Show the file selector
+    fileHandler.value = await window.showOpenFilePicker(pickerOpts);
+
+    // Read the files
+    for (const file of fileHandler.value) {
+      const fileData = await file.getFile();
+      const json = JSON.parse(await readFile(fileData))
+      languages.value.push({
+        name: file.name,
+        data: json
+      })
     }
   }
 
-  const findExistingLangs = () => {
-    langs.value = []
-    searchObjectForLangs(langObj, [])
-  }
+  const mergedObjects = computed(() => {
+    let merged = {}
+    languages.value.forEach(lang => {
+      merged = Object.assign(merged, lang.data)
+    })
+    return merged
+  })
 
-
-  const goThroughObjectAddingLang = (object, lang) => {
-    for (let key in object) {
-      if (langObj.value.length > 0) return
-      if (typeof object[key] === 'object') {
-        goThroughObjectAddingLang(object[key], lang)
-      }
-      if (typeof object[key] === 'string') {
-        object[lang] = ''
-        return
-      }
-    }
-  }
-
-  const addNewLang = (lang) => {
-    goThroughObjectAddingLang(langObj.value, lang)
-    findExistingLangs()
-  }
-
-  const goThroughObjectDeletingLang = (object, lang) => {
-    for (let key in object) {
-      if (langObj.value.length > 0) return
-      if (typeof object[key] === 'object') {
-        goThroughObjectDeletingLang(object[key], lang)
-      }
-      if (typeof object[key] === 'string') {
-        delete object[lang]
-      }
-    }
-  }
-
-  const removeLang = (lang) => {
-    goThroughObjectDeletingLang(langObj.value, lang)
-    findExistingLangs()
-  }
-
-
-  const generateLangFileInNewFormat = (lObj) => {
-    const langKeys = Object.keys(lObj)
-    let mergedLangsObject = {}
-
-    const recursiveTraverse = (obj, currentPath) => {
-      for (let key in obj) {
-        if (typeof obj[key] === 'object') {
-          recursiveTraverse(obj[key], [...currentPath, key])
-        }
-        if (typeof obj[key] === 'string') {
-          langKeys.forEach((langkey) => {
-            const value = _get(lObj[langkey], [...currentPath, key])
-            _set(mergedLangsObject, [...currentPath, key, langkey], value)
-          })
-        }
-      }
+  function transformObject(input, parentPath = '') {
+    // Function to create the key-path pairs for non-object values
+    function createKeys(obj, path) {
+      return Object.entries(obj).filter(([_, value]) => typeof value !== 'object' || value === null).map(([key, _]) => ({
+        key,
+        path: path ? `${path}.${key}` : key,
+      }));
     }
 
-    recursiveTraverse(lObj[langKeys[0]], [])
-    return mergedLangsObject
+    // Recursive function to handle objects and their nested structures
+    function createChildren(obj, path) {
+      return Object.entries(obj).filter(([_, value]) => typeof value === 'object' && value !== null).map(([key, value]) =>  transformObject(value, path ? `${path}.${key}` : key));
+    }
+
+    const keys = createKeys(input, parentPath);
+    const children = createChildren(input, parentPath);
+
+    return {
+      key: parentPath || 'Root',
+      label: parentPath.split('.').pop() || 'Root',
+      path: parentPath || "",
+      icon: 'pi pi-fw pi-folder',
+      keys,
+      children,
+    };
   }
 
-
+  const treeData = computed(() => {
+    console.log(transformObject(mergedObjects.value))
+    return [transformObject(mergedObjects.value)]
+  })
 
   return {
-    filename,
-    langObj,
-    langs,
-    tabDownColumn,
-    findExistingLangs,
-    addNewLang,
-    removeLang,
-    generateLangFileInNewFormat,
-    fileHandler,
-    isMergingFiles
+    selectFiles,
+    languages,
+    mergedObjects,
+    treeData,
+    selectedTreeNode
   }
 }

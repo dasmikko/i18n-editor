@@ -1,0 +1,10 @@
+{
+	"message": "Hej med dig",
+	"dialog": {
+		"header": "Dialog header",
+		"content": "Dialog content",
+		"createDialog": {
+      			"title": "Create item"
+    		}
+	}
+}

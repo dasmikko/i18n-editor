@@ -4,7 +4,9 @@ A super simple editor for [vue-18n by kazupon](https://kazupon.github.io/vue-i18
 
 [It is hosted on github pages](https://rekna.xyz/i18n-editor/ "Screenshot")
 
-Styling is a bit broken, but functionally works. I'm working on moing to nuxt, and improving the whole project.
+Styling is a bit broken, but functionally works. 
+
+**I'm working on a complete revamped version of this, that ditches my format, and goes back to having seperate files**
 
 ![Screenshot of the editor](./screenshot.png?raw=true "Screenshot")
 

@@ -1,6 +1,6 @@
 import {ref, computed} from 'vue'
 const fileHandler = ref(null)
-const languages = ref([])
+const langaugeObj = ref({})
 const selectedTreeNode = ref({'Root': true})
 
 export function useLangs() {
@@ -27,21 +27,14 @@ export function useLangs() {
         },
       ],
       excludeAcceptAllOption: true,
-      multiple: true
     };
 
     // Show the file selector
     fileHandler.value = await window.showOpenFilePicker(pickerOpts);
 
-    // Read the files
-    for (const file of fileHandler.value) {
-      const fileData = await file.getFile();
-      const json = JSON.parse(await readFile(fileData))
-      languages.value.push({
-        name: file.name,
-        data: json
-      })
-    }
+    const fileData = await fileHandler.value[0].getFile();
+
+    console.log(fileData)
   }
 
   const mergedObjects = computed(() => {

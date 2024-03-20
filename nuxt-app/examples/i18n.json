@@ -1,0 +1,14 @@
+{
+  "da": {
+    "app": {
+      "title": "Dansk"
+    },
+    "hello": "Hej"
+  },
+  "en": {
+    "app": {
+      "title": "English"
+    },
+    "hello": "Hello"
+  }
+}

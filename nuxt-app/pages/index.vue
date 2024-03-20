@@ -1,18 +1,22 @@
 <template>
   <Splitter
       class="main-splitter"
-    style="min-height: 300px; max-height: calc(100vh - 180px);"
+      style="min-height: 300px; max-height: calc(100vh - 180px);"
+      :pt="{
+        root: {
+          class: 'bg-surface-800'
+        }
+      }"
   >
     <SplitterPanel
       :size="30"
-      :min-size="30"
-      class="bg-surface-800"
+      class=""
     >
       <LangTreeView/>
     </SplitterPanel>
     <SplitterPanel
       :size="70"
-      class="p-4 bg-surface-800 overflow-y-auto"
+      class="p-4 mb-0 overflow-y-auto"
     >
       <ObjectKeysViewer />
     </SplitterPanel>

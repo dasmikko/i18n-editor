@@ -29,7 +29,7 @@ export function useLangs () {
 
   const findExistingLangs = () => {
     langs.value = []
-    searchObjectForLangs(langObj, [])
+    searchObjectForLangs(langObj.value, [])
   }
 
 

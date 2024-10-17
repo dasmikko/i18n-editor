@@ -8,26 +8,25 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.1.1",
-    "daisyui": "2.51.6",
     "file-saver": "2.0.5",
     "lodash": "4.17.21",
-    "primeicons": "^7.0.0",
-    "primevue": "^4.1.1",
-    "sass": "1.62.1",
-    "tailwindcss-primeui": "^0.3.4",
-    "vue": "3.3.2",
-    "vue-router": "4.2.0"
+    "primeicons": "7.0.0",
+    "primevue": "4.1.1",
+    "sass": "1.80.1",
+    "tailwindcss-primeui": "0.3.4",
+    "vue": "3.5.12",
+    "vue-router": "4.4.5"
   },
   "devDependencies": {
     "@iconify/json": "2.2.65",
-    "@vitejs/plugin-vue": "4.2.3",
+    "@vitejs/plugin-vue": "5.1.4",
     "autoprefixer": "10.4.14",
-    "postcss": "8.4.23",
-    "tailwindcss": "3.3.2",
-    "unplugin-icons": "0.16.1",
-    "unplugin-vue-components": "0.24.1",
-    "vite": "4.3.5",
-    "vite-plugin-pages": "0.29.0",
-    "vite-plugin-vue-devtools": "^7.5.2"
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.14",
+    "unplugin-icons": "0.19.3",
+    "unplugin-vue-components": "0.27.4",
+    "vite": "5.4.9",
+    "vite-plugin-pages": "0.32.3",
+    "vite-plugin-vue-devtools": "7.5.2"
   }
 }

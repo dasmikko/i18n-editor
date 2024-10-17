@@ -9,6 +9,9 @@ const tabDownColumn = ref(false)
 const fileHandler = ref(null)
 const isMergingFiles = ref(false)
 
+const selectedNodeKey = ref({})
+const disableKeyField = ref(true)
+
 export function useLangs () {
 
   const searchObjectForLangs = (object, currentPath) => {
@@ -100,6 +103,9 @@ export function useLangs () {
     removeLang,
     generateLangFileInNewFormat,
     fileHandler,
-    isMergingFiles
+    isMergingFiles,
+
+    selectedNodeKey,
+    disableKeyField,
   }
 }

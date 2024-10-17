@@ -1,6 +1,8 @@
 <template>
-  <router-view>
-  </router-view>
+  <div class="main-wrapper">
+    <ConfirmDialog/>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -14,10 +16,13 @@ import {computed, customRef, onMounted, ref, watch} from 'vue'
 import {useLangs} from './composables/useLangs.js'
 import AddLangDialog from './components/Dialog/AddLangDialog.vue'
 import LoadJsonDialog from './components/Dialog/LoadJsonDialog.vue'
+import ConfirmDialog from 'primevue/confirmdialog';
+
 
 export default {
   name: 'App',
   components: {
+    ConfirmDialog,
     LoadJsonDialog,
     AddLangDialog,
     Treeview,
@@ -66,7 +71,7 @@ export default {
 
 
     .copy-to-clipboard {
-      @apply absolute right-0 top-0 p-4 bg-gray-300 rounded cursor-pointer transition select-none;
+      @apply absolute right-0 top-0 p-4 bg-surface-800 rounded cursor-pointer transition select-none;
 
       &:hover {
         @apply bg-gray-400;
@@ -75,7 +80,7 @@ export default {
 
     pre {
       max-height: 200px;
-      @apply p-4 bg-gray-200 overflow-auto rounded;
+      @apply p-4 bg-surface-900 overflow-auto rounded;
     }
   }
 

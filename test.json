@@ -1,0 +1,163 @@
+{
+  "common": {
+    "logoff": {
+      "da": "Log af",
+      "en": "Logout"
+    }
+  },
+  "test": {},
+  "case": {
+    "dataview": {
+      "columns": {
+        "uniqueId": {
+          "da": "Unik Id",
+          "en": "Unik Id"
+        },
+        "ordinal": {
+          "da": "Sortering",
+          "en": "Sort Order"
+        },
+        "matriceSubject": {
+          "da": "Matrice/Emne",
+          "en": "Matrice/Subject"
+        },
+        "parameter": {
+          "da": "Parameter",
+          "en": "Parameter"
+        },
+        "type": {
+          "da": "Type",
+          "en": "Type"
+        },
+        "rmCrmName": {
+          "da": "RM/CRM Navn",
+          "en": "RM/CRM Name"
+        },
+        "method": {
+          "da": "Metode",
+          "en": "Method"
+        },
+        "remarks": {
+          "da": "Bemærkninger",
+          "en": "Remarks"
+        },
+        "location": {
+          "da": "Lokation",
+          "en": "Location"
+        },
+        "published": {
+          "da": "Publiceret",
+          "en": "Published"
+        },
+        "fieldOfCalibration": {
+          "da": "Kalibreringsområde",
+          "en": "Field of calibration"
+        },
+        "equipment": {
+          "da": "Udstyr",
+          "en": "Equipment"
+        },
+        "mesurement": {
+          "da": "Målestørrelse",
+          "en": "Quantity"
+        },
+        "rangeLow": {
+          "da": "Måleområde nedre grænse",
+          "en": "Range Low Limit"
+        },
+        "limitLow": {
+          "da": "U(CMC) i nedre grænse",
+          "en": "U(CMC) at Low Limit"
+        },
+        "limitHigh": {
+          "da": "U(CMC) i øvre grænse",
+          "en": "U(CMC) at High Limit"
+        },
+        "workStandard": {
+          "da": "Arbejdsnormal",
+          "en": "Working Standard"
+        },
+        "description": {
+          "da": "Bemærkning",
+          "en": "Remark"
+        },
+        "inSitu": {
+          "da": "I felten",
+          "en": "In Situ"
+        },
+        "rangeHigh": {
+          "da": "Måleområde øvre grænse",
+          "en": "Range High Limit"
+        },
+        "program": {
+          "da": "Program",
+          "en": "Programme"
+        },
+        "item": {
+          "da": "Emne",
+          "en": "Item"
+        },
+        "crmMethod": {
+          "da": "Metode",
+          "en": "Method"
+        },
+        "eaTest": {
+          "da": "Prøvningsområde",
+          "en": "Type of Test"
+        },
+        "measurementType": {
+          "da": "Prøvetype/emne",
+          "en": "Object"
+        },
+        "specification": {
+          "da": "Yderligere Specifikation",
+          "en": "Further Specification"
+        },
+        "referenceMethod": {
+          "da": "Referencemetode",
+          "en": "Reference Method"
+        },
+        "principle": {
+          "da": "Prøvningsprincip",
+          "en": "Principle of Test"
+        },
+        "equipprinciple": {
+          "da": "Udstyr/Princip",
+          "en": "Equipment/Principle"
+        },
+        "iupac": {
+          "da": "IUPAC",
+          "en": "IUPAC"
+        },
+        "system": {
+          "da": "System",
+          "en": "System"
+        },
+        "component": {
+          "da": "Komponent",
+          "en": "Component"
+        },
+        "secParameterArea": {
+          "da": "Sekundært parameter område",
+          "en": "Secondary parameter area"
+        },
+        "reviewState": {
+          "da": "Review State",
+          "en": "Review State"
+        },
+        "limitLowPrefix": {
+          "da": "U(CMC) i nedre grænse enhed",
+          "en": "U(CMC) at Low Limit prefix"
+        },
+        "limitHighPrefix": {
+          "da": "U(CMC) i øvre grænse enhed",
+          "en": "U(CMC) at High Limit prefix"
+        },
+        "publishState": {
+          "da": "Status",
+          "en": "Publish state"
+        }
+      }
+    }
+  }
+}

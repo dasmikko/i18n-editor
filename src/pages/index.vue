@@ -43,6 +43,14 @@
           </div>
         </template>
       </Card>
+
+      <a
+        href="https://github.com/dasmikko/i18n-editor"
+        target="_blank"
+        class="block mt-4 text-center text-surface-500 hover:text-surface-0 transition">
+          This project is open-source!
+          <i class="pi pi-github block mt-2" style="font-size: 2.5rem"></i>
+      </a>
     </div>
   </div>
 </template>

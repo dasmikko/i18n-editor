@@ -12,7 +12,7 @@ import {definePreset} from '@primevue/themes';
 import ConfirmationService from 'primevue/confirmationservice';
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/i18n-editor/'),
     routes,
 })
 

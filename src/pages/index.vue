@@ -1,7 +1,12 @@
 <template>
   <div class="w-screen h-screen flex items-center align-center justify-center">
-    <div>
+    <div class="max-w-[450px]">
       <p class="font-bold mb-4" style="font-size: 2rem;">i18n Editor</p>
+
+      <Message v-if="isUnsupportedBrowser" class="mb-2" severity="error">
+        This browser is unsupported.<br>
+        Try Google Chrome, or any Chrome based browser.
+      </Message>
 
       <Card>
         <template #title>
@@ -10,7 +15,7 @@
 
         <template #content class="card-body">
             <p class="mb-2">If you already are using the new file format, just select it.</p>
-            <p><a target="_blank" class="link link-primary" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
+            <p><a target="_blank" class="underline" href="https://github.com/dasmikko/i18n-editor#what-is-this">Read more about the format</a></p>
         </template>
         <template #footer>
           <div class="flex gap-4 mt-1">
@@ -46,11 +51,19 @@
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
+import Message from 'primevue/message'
 import { useLangs } from '../composables/useLangs.js'
 import {useRouter} from 'vue-router'
+import {computed} from 'vue';
 
 const langsComposable = useLangs()
 const router = useRouter()
+
+const isUnsupportedBrowser = computed(() => {
+  console.log(window)
+  if (!window.hasOwnProperty('showOpenFilePicker')) return true
+  return false
+})
 
 const readFile = (file) => {
   return new Promise((resolve, reject) => {

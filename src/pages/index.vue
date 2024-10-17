@@ -60,7 +60,6 @@ const langsComposable = useLangs()
 const router = useRouter()
 
 const isUnsupportedBrowser = computed(() => {
-  console.log(window)
   if (!window.hasOwnProperty('showOpenFilePicker')) return true
   return false
 })

@@ -64,6 +64,7 @@ import ToggleButton from 'primevue/togglebutton';
 import NewObjectField from '../components/newObjectField.vue';
 import SidebarTree from '../components/SidebarTree.vue';
 import KeyEditor from '../components/keyEditor.vue';
+import {useToast} from 'primevue/usetoast';
 
 
 
@@ -72,7 +73,7 @@ const langsComposable = useLangs()
 const { selectedNodeKey, disableKeyField } = useLangs()
 const tabByColumn = ref(false)
 const router = useRouter()
-
+const toast = useToast();
 
 
 onMounted(() => {
@@ -93,9 +94,7 @@ onBeforeUnmount(() => {
 })
 
 const copyToClipboard = async () => {
-
   await navigator.clipboard.writeText(JSON.stringify(langsComposable.langObj.value))
-  console.log(await navigator.clipboard.readText())
 }
 
 const onLoadJsonClick = () => {
@@ -107,7 +106,6 @@ const onSave = (e) => {
     return;
   }
   e.preventDefault();
-
   saveLanguageFile()
 }
 
@@ -130,9 +128,10 @@ const saveLanguageFile = async () => {
         },
       ],
     };
-
     langsComposable.fileHandler.value = [await window.showSaveFilePicker(pickerOpts)];
     langsComposable.isMergingFiles.value = false
+
+
   }
 
   // create a FileSystemWritableFileStream to write to
@@ -143,6 +142,8 @@ const saveLanguageFile = async () => {
 
   // close the file and write the contents to disk.
   await writableStream.close();
+
+  toast.add({ severity: 'success', summary: 'Info', detail: 'JSON file saved!', life: 3000 });
 }
 
 const langs = computed(() => {

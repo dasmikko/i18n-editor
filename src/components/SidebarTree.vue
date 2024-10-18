@@ -101,9 +101,6 @@ const langsTree = computed(() => {
           }
           traverseObject(obj[key], newPath);
         }
-      } else {
-        // If it's a primitive value, log the path and value
-        //console.log(`Path: ${newPath.join('.')}, Value: ${obj[key]}`);
       }
     }
   }
@@ -147,7 +144,6 @@ watch(
   (newVal, oldValue) => {
     let newValKey = Object.keys(newVal)[0]
     let oldValKey = Object.keys(oldValue)[0]
-    console.log(newVal)
 
     // Skip if the new value is empty
     if (!Object.keys(newVal).length) {

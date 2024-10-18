@@ -10,6 +10,8 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import {definePreset} from '@primevue/themes';
 import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+
 
 const router = createRouter({
     history: createWebHistory('/i18n-editor/'),
@@ -80,6 +82,7 @@ app.use(PrimeVue, {
     }
 });
 app.use(ConfirmationService);
+app.use(ToastService);
 
 
 app.mount('#app')

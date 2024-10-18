@@ -1,6 +1,7 @@
 <template>
   <div class="main-wrapper">
     <ConfirmDialog/>
+    <Toast position="bottom-right" />
     <router-view></router-view>
   </div>
 </template>
@@ -17,12 +18,14 @@ import {useLangs} from './composables/useLangs.js'
 import AddLangDialog from './components/Dialog/AddLangDialog.vue'
 import LoadJsonDialog from './components/Dialog/LoadJsonDialog.vue'
 import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 
 export default {
   name: 'App',
   components: {
     ConfirmDialog,
+    Toast,
     LoadJsonDialog,
     AddLangDialog,
     Treeview,
@@ -41,7 +44,6 @@ export default {
     const copyToClipboard = async () => {
 
       await navigator.clipboard.writeText(JSON.stringify(langsComposable.langObj.value))
-      console.log(await navigator.clipboard.readText())
     }
 
     watch(

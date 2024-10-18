@@ -10,7 +10,7 @@
       </template>
 
       <template #end>
-        <ToggleButton v-model="disableKeyField" onLabel="Key field edit enabled" offLabel="Key field edit disabled" />
+        <ToggleButton v-model="disableKeyField" onLabel="Key field edit disabled" offLabel="Key field edit enabled" />
       </template>
     </Toolbar>
 

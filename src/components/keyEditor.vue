@@ -1,6 +1,5 @@
 <template>
   <ContextMenu ref="cm" :model="contextMenuItems"/>
-  {{ editingRows }}
   <DataTable
     ref="tableRef"
     class="mb-4 w-full"

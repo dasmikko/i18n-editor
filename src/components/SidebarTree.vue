@@ -1,7 +1,7 @@
 <template>
   <ContextMenu ref="cm" :model="contextMenuItems"/>
   <RenameObjectDialog ref="renameDialog" :selectedNode="selectedNode"/>
-
+  <MoveObjectDialog ref="moveDialog" :tree="langsTree" :selectedNode="selectedNode"/>
 
   <Tree
     v-model:selection-keys="selectedNodeKey"
@@ -26,9 +26,11 @@ import _unset from 'lodash/unset';
 import _set from 'lodash/set';
 import RenameObjectDialog from './Dialog/new/renameObjectDialog.vue';
 import { useConfirm } from "primevue/useconfirm";
+import MoveObjectDialog from './Dialog/new/moveObjectDialog.vue';
 
 const confirm = useConfirm()
 const renameDialog = ref(null)
+const moveDialog = ref(null)
 const langsComposable = useLangs()
 const { selectedNodeKey } = useLangs()
 
@@ -112,6 +114,7 @@ const cm = ref(null);
 const selectedNode = ref();
 const contextMenuItems = [
   { label: 'Rename object', icon: 'pi pi-fw pi-pencil', command: () => renameDialog.value.show() },
+  { label: 'Move object', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show() },
   { label: 'Delete object', icon: 'pi pi-fw pi-trash', command: () => deleteKey() }
 ]
 
@@ -156,7 +159,6 @@ watch(
     keyPath?.forEach((key, index) => {
       let path = keyPath.slice(0, index + 1).join('.')
       expandedKeys.value[path] = true
-
     })
 
 

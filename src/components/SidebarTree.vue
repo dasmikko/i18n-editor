@@ -8,7 +8,7 @@
     v-model:selection-keys="selectedNodeKey"
     v-model:expanded-keys="expandedKeys"
     selectionMode="single"
-    :value="langsTree"
+    :value="langsComposable.langsTree.value"
     class="rounded-md overflow-hidden w-full">
     <template #default="slotProps">
       <span class="block w-full" @contextmenu="(e) => onRowContextMenu(e, slotProps.node)">

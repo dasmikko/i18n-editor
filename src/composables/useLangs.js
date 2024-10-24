@@ -1,4 +1,4 @@
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 import _get from 'lodash/get.js'
 import _set from 'lodash/set.js'
 
@@ -93,6 +93,82 @@ export function useLangs () {
 
 
 
+
+  // Build a tree structure from an array of dot-separated paths // Thanks chatgpt
+  const buildTree = (arr) => {
+    const result = [];
+
+    // Helper function to find or create a node
+    function findOrCreateNode(pathParts, currentLevel, fullPath) {
+      const currentKey = pathParts[0];
+      const currentFullPath = fullPath ? `${fullPath}.${currentKey}` : currentKey;
+
+      let node = currentLevel.find((item) => item.key === currentFullPath);
+
+      if (!node) {
+        node = {
+          key: currentFullPath,
+          label: currentKey
+
+        };
+        currentLevel.push(node);
+      }
+
+      if (pathParts.length > 1) {
+        if (!node.children) {
+          node.children = [];
+        }
+        findOrCreateNode(pathParts.slice(1), node.children, currentFullPath);
+      }
+    }
+
+    // Process each item in the array
+    arr.forEach((item) => {
+      const pathParts = item.split('.');
+      findOrCreateNode(pathParts, result, '');
+    });
+
+    return result;
+  }
+
+  // This is a goddamn mess
+  const langsTree = computed(() => {
+    let paths = []
+
+    function traverseObject(obj, currentPath = []) {
+      for (let key in obj) {
+        // Create the new path including the current key
+        const newPath = [...currentPath, key];
+
+        if (typeof obj[key] === 'object') {
+          // If it's an object, recurse deeper
+          if (langs.value.includes(Object.keys(obj[key])[0])) {
+            // Is a language object
+            let path = currentPath.join('.')
+            if (!paths.includes(path) && path !== '') {
+              paths.push(path)
+            } else if (!paths.includes(key) && path === '') {
+              paths.push(key)
+            }
+          } else {
+            // Is not language object
+            let path = newPath.join('.')
+            if (!paths.includes(path) && path !== '') {
+              paths.push(path)
+            } else if (!paths.includes(key) && path === '') {
+              paths.push(key)
+            }
+            traverseObject(obj[key], newPath);
+          }
+        }
+      }
+    }
+    traverseObject(langObj.value)
+    return buildTree(paths)
+  })
+
+
+
   return {
     filename,
     langObj,
@@ -107,5 +183,7 @@ export function useLangs () {
 
     selectedNodeKey,
     disableKeyField,
+
+    langsTree
   }
 }

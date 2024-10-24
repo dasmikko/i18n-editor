@@ -1,5 +1,7 @@
 <template>
   <ContextMenu ref="cm" :model="contextMenuItems"/>
+  <MoveKeyDialog ref="moveDialog" :selectedRow="selectedRow"/>
+
   <DataTable
     ref="tableRef"
     class="mb-4 w-full"
@@ -72,6 +74,9 @@ const confirm = useConfirm();
 const toast = useToast()
 const tableRef = ref(null)
 
+// Dialogs
+const moveDialog = ref(null)
+
 const objectToView = computed(() => {
   if (!selectedNodeKey.value) {
     return []
@@ -137,6 +142,7 @@ const cm = ref(null);
 const selectedRow = ref();
 const contextMenuItems = [
   {label: 'Copy key path', icon: 'pi pi-fw pi-copy', command: () => copyKeyPath()},
+  {label: 'Move key', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show()},
   {label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey()}
 ]
 

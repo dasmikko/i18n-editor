@@ -9,11 +9,10 @@
 <script>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
 import Grid from './components/Grid/Grid.vue'
 import GridColumn from './components/Grid/GridColumn.vue'
 import Treeview from "./TreeView/Treeview.vue";
-import {computed, customRef, onMounted, ref, watch} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import {useLangs} from './composables/useLangs.js'
 import AddLangDialog from './components/Dialog/AddLangDialog.vue'
 import LoadJsonDialog from './components/Dialog/LoadJsonDialog.vue'
@@ -29,7 +28,6 @@ export default {
     LoadJsonDialog,
     AddLangDialog,
     Treeview,
-    HelloWorld,
     Grid,
     GridColumn
   },

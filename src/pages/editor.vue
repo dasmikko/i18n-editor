@@ -18,10 +18,6 @@
       <div class="bg-surface-900 rounded-md">
         <div class="sticky top-0">
           <SidebarTree />
-
-          <div class="px-4 pb-4">
-            <NewObjectField/>
-          </div>
         </div>
       </div>
       <div class="flex-1 p-4 bg-surface-900 rounded-md flex items-center justify-center flex-col">

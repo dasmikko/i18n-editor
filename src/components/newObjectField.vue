@@ -4,6 +4,10 @@
     <InputText v-model="inputValue"  placeholder="Enter object name" @keyup.enter="onClickAddKey" />
     <Button outlined icon="pi pi-key" label="Add object" @click="onClickAddKey" />
   </InputGroup>
+
+  <template v-if="langComp.selectedNodeKey.value === null || !Object.keys(langComp.selectedNodeKey.value).length">
+    <Message class="mt-4">Adding to root level</Message>
+  </template>
 </template>
 
 <script setup>
@@ -14,6 +18,7 @@ import Button from 'primevue/button';
 import {useLangs} from '../composables/useLangs';
 import {ref} from 'vue';
 import _set from 'lodash/set';
+import Message from 'primevue/message';
 
 const langComp = useLangs();
 const inputValue = ref(null);

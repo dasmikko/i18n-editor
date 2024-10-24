@@ -16,6 +16,10 @@
         </span>
     </template>
   </Tree>
+
+  <div class="px-4 pb-4">
+    <NewObjectField/>
+  </div>
 </template>
 
 <script setup>
@@ -29,6 +33,7 @@ import RenameObjectDialog from './Dialog/new/renameObjectDialog.vue';
 import { useConfirm } from "primevue/useconfirm";
 import MoveObjectDialog from './Dialog/new/moveObjectDialog.vue';
 import CopyObjectDialog from './Dialog/new/copyObjectDialog.vue';
+import NewObjectField from './newObjectField.vue';
 
 const confirm = useConfirm()
 const renameDialog = ref(null)

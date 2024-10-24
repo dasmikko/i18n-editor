@@ -52,7 +52,6 @@
 </template>
 
 <script setup>
-
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import NewKeyField from './newKeyField.vue';
@@ -64,10 +63,12 @@ import _unset from 'lodash/unset';
 import {useLangs} from '../composables/useLangs';
 import _get from 'lodash/get';
 import {useConfirm} from 'primevue/useconfirm';
+import {useToast} from 'primevue/usetoast';
 
 const langsComposable = useLangs()
 const {selectedNodeKey, disableKeyField} = useLangs()
 const confirm = useConfirm();
+const toast = useToast()
 const tableRef = ref(null)
 
 const objectToView = computed(() => {
@@ -134,6 +135,7 @@ const onCellEditComplete = (e) => {
 const cm = ref(null);
 const selectedRow = ref();
 const contextMenuItems = [
+  {label: 'Copy key path', icon: 'pi pi-fw pi-copy', command: () => copyKeyPath()},
   {label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey()}
 ]
 
@@ -142,6 +144,15 @@ const onRowContextMenu = (event) => {
   cm.value.show(event.originalEvent);
 };
 
+
+const copyKeyPath = () => {
+  let currentPath = Object.keys(selectedNodeKey.value)[0]
+  let currentKey = selectedRow.value.key
+  let fullPath = `${currentPath}.${currentKey}`
+
+  navigator.clipboard.writeText(fullPath)
+  toast.add({ severity: 'success', summary: 'Info', detail: 'Key path copied!', life: 3000 });
+}
 
 const deleteKey = () => {
   confirm.require({

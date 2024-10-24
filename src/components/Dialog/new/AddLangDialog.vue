@@ -11,12 +11,12 @@
 
     <div class="flex flex-col gap-2 mb-4">
       <label for="key">Language</label>
-      <InputText v-model="inputValue" id="key" fluid></InputText>
+      <InputText autofocus v-model="inputValue" id="key" fluid></InputText>
     </div>
 
     <div class="flex gap-2 justify-end">
       <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-      <Button label="Add key" :disabled="!inputValue.length" @click="onClickAddKey"/>
+      <Button label="Add language" :disabled="!inputValue.length" @click="onClickAddKey"/>
     </div>
   </Dialog>
 </template>

@@ -2,11 +2,11 @@
   <Dialog
     v-model:visible="visible"
     modal
-    header="Move object"
+    header="Copy object"
           :style="{ width: '25rem' }">
 
     <div class="flex flex-col gap-2 mb-4">
-      <label for="key">Select where to move the object</label>
+      <label for="key">Select where to copy the object to</label>
 
       <Tree
         v-model:expanded-keys="expandedKeys"
@@ -18,12 +18,12 @@
     </div>
 
     <template v-if="selectedNodeKey === null || !Object.keys(selectedNodeKey).length">
-      <Message class="mb-4">Moving to the root of the language json</Message>
+      <Message class="mb-4">Copying to the root of the language json</Message>
     </template>
-    
+
     <div class="flex gap-2 justify-end">
       <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-      <Button label="Move" @click="onClickMove"/>
+      <Button label="Copy" @click="onClickCopy"/>
     </div>
   </Dialog>
 </template>
@@ -47,11 +47,10 @@ const props = defineProps({
 
 const visible = ref(false);
 const langComp = useLangs();
-const inputValue = ref(null);
 const selectedNodeKey = ref(null)
 const expandedKeys = ref([])
 
-const onClickMove = () => {
+const onClickCopy = () => {
   const oldPath = props.selectedNode.key
   const keyName = oldPath.split('.')[oldPath.split('.').length - 1]
 
@@ -66,8 +65,7 @@ const onClickMove = () => {
   const oldObj = _get(langComp.langObj.value, oldPath)
   _set(langComp.langObj.value, newPath, oldObj)
 
-  // Delete the old language object
-  _unset(langComp.langObj.value, oldPath)
+  // Todo: Merge with the existing object if it exists
 
   visible.value = false;
 }

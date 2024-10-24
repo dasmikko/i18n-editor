@@ -7,7 +7,7 @@
 
     <div class="flex flex-col gap-2 mb-4">
       <label for="key">New object key</label>
-      <InputText v-model="inputValue" id="key" fluid></InputText>
+      <InputText autofocus v-model="inputValue" id="key" fluid></InputText>
     </div>
 
     <div class="flex gap-2 justify-end">

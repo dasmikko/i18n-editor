@@ -3,7 +3,7 @@ import './index.scss'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router';
 import routes from "virtual:generated-pages";
 
 import PrimeVue from 'primevue/config';
@@ -14,7 +14,7 @@ import ToastService from 'primevue/toastservice';
 
 
 const router = createRouter({
-    history: createWebHistory('/i18n-editor/'),
+    history: createWebHashHistory('/i18n-editor/'),
     routes,
 })
 

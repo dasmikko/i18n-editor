@@ -64,6 +64,7 @@ import {useLangs} from '../composables/useLangs';
 import _get from 'lodash/get';
 import {useConfirm} from 'primevue/useconfirm';
 import {useToast} from 'primevue/usetoast';
+import {useKeyModifier} from '@vueuse/core';
 
 const langsComposable = useLangs()
 const {selectedNodeKey, disableKeyField} = useLangs()
@@ -144,13 +145,18 @@ const onRowContextMenu = (event) => {
   cm.value.show(event.originalEvent);
 };
 
-
-const copyKeyPath = () => {
+const controlState = useKeyModifier('Control')
+const copyKeyPath = (e) => {
   let currentPath = Object.keys(selectedNodeKey.value)[0]
   let currentKey = selectedRow.value.key
   let fullPath = `${currentPath}.${currentKey}`
 
-  navigator.clipboard.writeText(fullPath)
+  if (controlState.value) {
+    navigator.clipboard.writeText(`t('${fullPath}')`)
+  } else {
+    navigator.clipboard.writeText(fullPath)
+  }
+
   toast.add({ severity: 'success', summary: 'Info', detail: 'Key path copied!', life: 3000 });
 }
 

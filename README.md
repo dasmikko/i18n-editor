@@ -6,6 +6,10 @@ A super simple editor for [vue-18n by kazupon](https://kazupon.github.io/vue-i18
 
 ![Screenshot of the editor](./screenshot.png?raw=true "Screenshot")
 
+## Browser support
+
+Sadly it only supports browsers that implement the [FileSystem API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_API) fully, and Firefox doesn't do that. 
+
 ## What is this?
 
 The goal of the tool is to simplify editing the language files, and not having to hassle with multiple files.
@@ -41,7 +45,6 @@ In my version, each key contains all the languages, making it easier to edit.
 
 Don't worry, it's very easy to use my format.
 
-
 ## How to use
 
 ### First time use
@@ -67,3 +70,6 @@ npm run build
 ```
 
 Then you can run the `npm run serve` as usual
+
+## Future
+I'm planning on supporting multiple language files, as that is the default way the i18n library does it.

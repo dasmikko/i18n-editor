@@ -1,7 +1,7 @@
 <template>
-  <ContextMenu ref="cm" :model="contextMenuItems" />
-
+  <ContextMenu ref="cm" :model="contextMenuItems"/>
   <DataTable
+    ref="tableRef"
     class="mb-4 w-full"
     :value="objectToView"
     editMode="cell"
@@ -11,15 +11,23 @@
     @rowContextmenu="onRowContextMenu"
     @cell-edit-complete="onCellEditComplete"
     :pt="{
-              column: {
-                  bodycell: ({ state }) => ({
-                      class: [{ '!py-0': state['d_editing'] }]
-                  })
-              }
-          }">
+      bodyRow: (context) => ({
+        class: [
+          { ['row-' + context.props.rowData.key]: true },
+        ]
+      }),
+      column: {
+
+          bodycell: (context) => ({
+              class: [
+                { '!py-0': context.state['d_editing'] },
+              ]
+          })
+      }
+    }">
     <Column field="key" header="Key" style="width: 25%">
-      <template v-if="!disableKeyField"  #editor="{ data, field }">
-        <InputText v-model="data[field]" autofocus fluid />
+      <template v-if="!disableKeyField" #editor="{ data, field }">
+        <InputText v-model="data[field]" autofocus fluid/>
       </template>
     </Column>
     <Column
@@ -28,7 +36,7 @@
       :header="language"
       style="width: 25%">
       <template #editor="{ data, field }">
-        <InputText v-model="data[field]" autofocus fluid />
+        <InputText v-model="data[field]" autofocus fluid/>
       </template>
     </Column>
 
@@ -40,7 +48,7 @@
     </template>
   </DataTable>
 
-  <NewKeyField/>
+  <NewKeyField :tableRef="tableRef"/>
 </template>
 
 <script setup>
@@ -51,15 +59,16 @@ import NewKeyField from './newKeyField.vue';
 import InputText from 'primevue/inputtext';
 import ContextMenu from 'primevue/contextmenu';
 import _set from 'lodash/set';
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import _unset from 'lodash/unset';
 import {useLangs} from '../composables/useLangs';
 import _get from 'lodash/get';
-import { useConfirm } from "primevue/useconfirm";
+import {useConfirm} from 'primevue/useconfirm';
 
 const langsComposable = useLangs()
-const { selectedNodeKey, disableKeyField } = useLangs()
+const {selectedNodeKey, disableKeyField} = useLangs()
 const confirm = useConfirm();
+const tableRef = ref(null)
 
 const objectToView = computed(() => {
   if (!selectedNodeKey.value) {
@@ -107,7 +116,6 @@ const renameKey = (e) => {
 }
 
 
-
 const onCellEditComplete = (e) => {
   if (e.field === 'key') {
     renameKey(e)
@@ -126,7 +134,7 @@ const onCellEditComplete = (e) => {
 const cm = ref(null);
 const selectedRow = ref();
 const contextMenuItems = [
-  { label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey() }
+  {label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey()}
 ]
 
 
@@ -154,6 +162,9 @@ const deleteKey = () => {
     }
   })
 }
+
+
+const editingRows = ref([])
 </script>
 
 <style scoped lang="scss">

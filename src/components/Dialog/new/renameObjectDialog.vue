@@ -10,8 +10,6 @@
       <InputText v-model="inputValue" id="key" fluid></InputText>
     </div>
 
-    {{selectedNode}}
-
     <div class="flex gap-2 justify-end">
       <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
       <Button label="Rename" @click="onClickRename"/>

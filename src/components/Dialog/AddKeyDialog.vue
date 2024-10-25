@@ -1,68 +1,55 @@
 <template>
+  <div @click="visible = true">
+    <slot></slot>
+  </div>
 
-  <button class="btn btn-xs gap-2" @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-key/> Add Key
-  </button>
-  <Dialog title="Add Key" v-model="dialogVisible">
-    <Grid>
-      <GridColumn column="1">
-        <input type="text" class="input input-bordered w-full" v-model="inputValue" @keypress.enter="onClickAddKey">
-      </GridColumn>
-    </Grid>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    header="Add key"
+          :style="{ width: '25rem' }">
 
-    <template v-slot:actions>
-      <button class="btn btn-outline mr-2" @click="dialogVisible = false">Cancel</button>
-      <button class="btn btn-primary" @click="onClickAddKey">Add key</button>
-    </template>
+    <div class="flex flex-col gap-2 mb-4">
+      <label for="key">Key</label>
+      <InputText v-model="inputValue" id="key" fluid></InputText>
+    </div>
+
+    <div class="flex gap-2 justify-end">
+      <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+      <Button label="Add key" @click="onClickAddKey"/>
+    </div>
   </Dialog>
 </template>
 
-<script>
-import Dialog from './Dialog.vue'
-import {ref, watch} from 'vue'
-import Grid from '../Grid/Grid.vue'
-import GridColumn from '../Grid/GridColumn.vue'
-import {useLangs} from '../../composables/useLangs.js'
-export default {
-  name: 'AddKeyDialog',
-  components: {GridColumn, Grid, Dialog},
-  props: {
-    obj: Object
-  },
-  setup (props) {
-    const dialogVisible = ref(false)
-    const inputValue = ref('')
-    const langsComposable = useLangs()
+<script setup>
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import {ref} from 'vue';
+import {useLangs} from '../../composables/useLangs';
+import _set from 'lodash/set';
 
+const visible = ref(false);
+const langComp = useLangs();
+const inputValue = ref(null);
 
-    const onClickAddKey = () => {
-      if (!inputValue.value) return
-      dialogVisible.value = false
+const onClickAddKey = () => {
+  const currentPath = Object.keys(langComp.selectedNodeKey.value)[0]
+  const newKey = inputValue.value
 
-      props.obj[inputValue.value] = {}
-      langsComposable.langs.value.forEach(key => {
-        props.obj[inputValue.value][key] = ''
-      })
+  let langObj = {}
 
-      inputValue.value = ''
-    }
+  langComp.langs.value.forEach(lang => {
+    langObj[lang] = ''
+  })
 
-    watch(
-        dialogVisible,
-        (val) => {
-          if (!val) inputValue.value = ''
-        }
-    )
+  _set(langComp.langObj.value, `${currentPath}.${newKey}`, langObj)
 
-    return {
-      dialogVisible,
-      inputValue,
-      onClickAddKey
-    }
-  }
+  visible.value = false;
 }
+
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

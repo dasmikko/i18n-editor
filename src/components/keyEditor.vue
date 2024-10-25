@@ -68,7 +68,7 @@ import _get from 'lodash/get';
 import {useConfirm} from 'primevue/useconfirm';
 import {useToast} from 'primevue/usetoast';
 import {useKeyModifier} from '@vueuse/core';
-import CopyKeyDialog from './Dialog/new/copyKeyDialog.vue';
+import CopyKeyDialog from './Dialog/copyKeyDialog.vue';
 
 const langsComposable = useLangs()
 const {selectedNodeKey, disableKeyField} = useLangs()

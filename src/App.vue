@@ -9,13 +9,8 @@
 <script>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import Grid from './components/Grid/Grid.vue'
-import GridColumn from './components/Grid/GridColumn.vue'
-import Treeview from "./TreeView/Treeview.vue";
 import {onMounted, ref, watch} from 'vue'
 import {useLangs} from './composables/useLangs.js'
-import AddLangDialog from './components/Dialog/AddLangDialog.vue'
-import LoadJsonDialog from './components/Dialog/LoadJsonDialog.vue'
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
 
@@ -25,11 +20,6 @@ export default {
   components: {
     ConfirmDialog,
     Toast,
-    LoadJsonDialog,
-    AddLangDialog,
-    Treeview,
-    Grid,
-    GridColumn
   },
   setup () {
     const langsComposable = useLangs()

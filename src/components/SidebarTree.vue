@@ -29,10 +29,10 @@ import {useLangs} from '../composables/useLangs';
 import ContextMenu from 'primevue/contextmenu';
 import _unset from 'lodash/unset';
 import _set from 'lodash/set';
-import RenameObjectDialog from './Dialog/new/renameObjectDialog.vue';
+import RenameObjectDialog from './Dialog/renameObjectDialog.vue';
 import { useConfirm } from "primevue/useconfirm";
-import MoveObjectDialog from './Dialog/new/moveObjectDialog.vue';
-import CopyObjectDialog from './Dialog/new/copyObjectDialog.vue';
+import MoveObjectDialog from './Dialog/moveObjectDialog.vue';
+import CopyObjectDialog from './Dialog/copyObjectDialog.vue';
 import NewObjectField from './newObjectField.vue';
 
 const confirm = useConfirm()

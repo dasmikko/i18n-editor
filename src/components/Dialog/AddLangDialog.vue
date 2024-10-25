@@ -1,62 +1,53 @@
 <template>
-  <button class="btn gap-2" @click="dialogVisible = true" tabindex="-1">
-    <i-ic-round-language/> Add language
-  </button>
+  <div @click="visible = true">
+    <slot></slot>
+  </div>
 
-  <Dialog title="Add Language" v-model="dialogVisible">
-    <Grid>
-      <GridColumn column="1">
-        <input type="text" v-model="inputValue" @keypress.enter="onClickAddKey">
-      </GridColumn>
-    </Grid>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    header="Add language"
+          :style="{ width: '25rem' }">
 
-    <template v-slot:actions>
-      <button class="outline mr-2" @click="dialogVisible = false">Cancel</button>
-      <button @click="onClickAddKey">Add lang</button>
-    </template>
+    <div class="flex flex-col gap-2 mb-4">
+      <label for="key">Language</label>
+      <InputText autofocus v-model="inputValue" id="key" fluid></InputText>
+    </div>
+
+    <div class="flex gap-2 justify-end">
+      <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
+      <Button label="Add language" :disabled="!inputValue.length" @click="onClickAddKey"/>
+    </div>
   </Dialog>
 </template>
 
-<script>
-import Dialog from './Dialog.vue'
-import {ref, watch} from 'vue'
-import Grid from '../Grid/Grid.vue'
-import GridColumn from '../Grid/GridColumn.vue'
-import {useLangs} from '../../composables/useLangs.js'
-export default {
-  name: 'AddLangDialog',
-  components: {GridColumn, Grid, Dialog},
-  setup (props) {
-    const dialogVisible = ref(false)
-    const inputValue = ref('')
-    const langsComposable = useLangs()
+<script setup>
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import {ref, watch} from 'vue';
+import {useLangs} from '../../composables/useLangs';
+import _set from 'lodash/set';
 
+const visible = ref(false);
+const langComp = useLangs();
+const inputValue = ref('');
 
-    const onClickAddKey = () => {
-      if (!inputValue.value) return
-      dialogVisible.value = false
+const onClickAddKey = () => {
+  langComp.addNewLang(inputValue.value)
 
-      langsComposable.addNewLang(inputValue.value)
-
-      inputValue.value = ''
-    }
-
-    watch(
-        dialogVisible,
-        (val) => {
-          if (!val) inputValue.value = ''
-        }
-    )
-
-    return {
-      dialogVisible,
-      inputValue,
-      onClickAddKey
-    }
-  }
+  visible.value = false;
 }
+
+watch(
+  visible,
+  () => {
+    inputValue.value = ''
+  }
+)
+
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

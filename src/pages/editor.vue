@@ -50,19 +50,14 @@
 <script setup>
 import {useLangs} from '../composables/useLangs.js'
 import {onBeforeUnmount, onMounted, ref, computed, watch} from 'vue'
-import AddLangDialog from '../components/Dialog/new/AddLangDialog.vue'
-import Treeview from '../TreeView/Treeview.vue'
+import AddLangDialog from '../components/Dialog/AddLangDialog.vue'
 import {useRouter} from 'vue-router'
-import saveAs from 'file-saver'
 import Button from 'primevue/button'
 import Toolbar from 'primevue/toolbar';
 import ToggleButton from 'primevue/togglebutton';
-import NewObjectField from '../components/newObjectField.vue';
 import SidebarTree from '../components/SidebarTree.vue';
 import KeyEditor from '../components/keyEditor.vue';
 import {useToast} from 'primevue/usetoast';
-
-
 
 
 const langsComposable = useLangs()

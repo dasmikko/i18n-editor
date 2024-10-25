@@ -167,7 +167,7 @@ const copyKeyPath = (e) => {
     navigator.clipboard.writeText(fullPath)
   }
 
-  toast.add({ severity: 'success', summary: 'Info', detail: 'Key path copied!', life: 3000 });
+  toast.add({ severity: 'success', summary: 'Info', detail: 'Key path copied!\n\nNote: If you hold down CTRL, you get the path with the function around it!', life: 5000 });
 }
 
 const deleteKey = () => {

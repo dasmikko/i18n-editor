@@ -1,6 +1,7 @@
 <template>
   <ContextMenu ref="cm" :model="contextMenuItems"/>
   <MoveKeyDialog ref="moveDialog" :selectedRow="selectedRow"/>
+  <CopyKeyDialog ref="copyDialog" :selectedRow="selectedRow"/>
 
   <DataTable
     ref="tableRef"
@@ -67,6 +68,7 @@ import _get from 'lodash/get';
 import {useConfirm} from 'primevue/useconfirm';
 import {useToast} from 'primevue/usetoast';
 import {useKeyModifier} from '@vueuse/core';
+import CopyKeyDialog from './Dialog/new/copyKeyDialog.vue';
 
 const langsComposable = useLangs()
 const {selectedNodeKey, disableKeyField} = useLangs()
@@ -76,6 +78,7 @@ const tableRef = ref(null)
 
 // Dialogs
 const moveDialog = ref(null)
+const copyDialog = ref(null)
 
 const objectToView = computed(() => {
   if (!selectedNodeKey.value) {
@@ -141,7 +144,8 @@ const onCellEditComplete = (e) => {
 const cm = ref(null);
 const selectedRow = ref();
 const contextMenuItems = [
-  {label: 'Copy key path', icon: 'pi pi-fw pi-copy', command: () => copyKeyPath()},
+  {label: 'Copy key path', icon: 'pi pi-fw pi-clipboard', command: () => copyKeyPath()},
+  {label: 'Copy key', icon: 'pi pi-fw pi-copy', command: () => copyDialog.value.show()},
   {label: 'Move key', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show()},
   {label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey()}
 ]

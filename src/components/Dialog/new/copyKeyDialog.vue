@@ -2,7 +2,7 @@
   <Dialog
     v-model:visible="visible"
     modal
-    header="Move key"
+    header="Copy key"
           :style="{ width: '25rem' }">
 
     <div class="flex flex-col gap-2 mb-4">
@@ -18,12 +18,12 @@
     </div>
 
     <template v-if="selectedNodeKey === null || !Object.keys(selectedNodeKey).length">
-      <Message severity="error" class="mb-4">Cannot move it to the root</Message>
+      <Message severity="error" class="mb-4">Cannot copy it to the root</Message>
     </template>
     
     <div class="flex gap-2 justify-end">
       <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>
-      <Button label="Move" :disabled="selectedNodeKey === null || !Object.keys(selectedNodeKey).length" @click="onClickMove"/>
+      <Button label="Move" :disabled="selectedNodeKey === null || !Object.keys(selectedNodeKey).length" @click="onClickCopy"/>
     </div>
   </Dialog>
 </template>
@@ -51,7 +51,7 @@ const inputValue = ref(null);
 const selectedNodeKey = ref(null)
 const expandedKeys = ref([])
 
-const onClickMove = () => {
+const onClickCopy = () => {
   const currentPath = Object.keys(langComp.selectedNodeKey.value)[0]
   const oldPath = `${currentPath}.${props.selectedRow.key}`
 
@@ -67,10 +67,6 @@ const onClickMove = () => {
   // Create the new language object
   const oldObj = _get(langComp.langObj.value, oldPath)
   _set(langComp.langObj.value, newPath, oldObj)
-
-  // Delete the old language object
-  _unset(langComp.langObj.value, oldPath)
-
   visible.value = false;
 }
 

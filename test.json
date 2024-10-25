@@ -3,6 +3,10 @@
     "logoff": {
       "da": "Log af",
       "en": "Logout"
+    },
+    "lol": {
+      "da": "hello",
+      "en": "world"
     }
   },
   "test": {},

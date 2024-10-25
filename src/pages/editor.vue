@@ -106,7 +106,7 @@ const onSave = (e) => {
 }
 
 const saveLanguageFile = async () => {
-  let blob = new Blob([JSON.stringify(langsComposable.langObj.value)],
+  let blob = new Blob([JSON.stringify(langsComposable.langObj.value, null, 2)],
     {type: "application/json"});
 
   let fileHandler = null

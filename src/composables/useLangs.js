@@ -131,18 +131,29 @@ export function useLangs () {
     return result;
   }
 
+  const sortObject = (unorderedObj) => {
+    return Object.keys(unorderedObj).sort().reduce(
+      (obj, key) => {
+        obj[key] = unorderedObj[key];
+        return obj;
+      },
+      {}
+    );
+  }
+
   // This is a goddamn mess
   const langsTree = computed(() => {
     let paths = []
 
     function traverseObject(obj, currentPath = []) {
-      for (let key in obj) {
+      let orderedObj = sortObject(obj)
+      for (let key in orderedObj) {
         // Create the new path including the current key
         const newPath = [...currentPath, key];
 
-        if (typeof obj[key] === 'object') {
+        if (typeof orderedObj[key] === 'object') {
           // If it's an object, recurse deeper
-          if (langs.value.includes(Object.keys(obj[key])[0])) {
+          if (langs.value.includes(Object.keys(orderedObj[key])[0])) {
             // Is a language object
             let path = currentPath.join('.')
             if (!paths.includes(path) && path !== '') {
@@ -158,7 +169,7 @@ export function useLangs () {
             } else if (!paths.includes(key) && path === '') {
               paths.push(key)
             }
-            traverseObject(obj[key], newPath);
+            traverseObject(orderedObj[key], newPath);
           }
         }
       }

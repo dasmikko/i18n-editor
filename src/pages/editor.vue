@@ -9,6 +9,12 @@
         <Button severity="secondary" class="mr-2" @click="saveLanguageFile" label="Save (CTRL+S)" icon="pi pi-save"/>
       </template>
 
+      <template #center>
+        <SearchDialog>
+          <Button class="w-64" icon="pi pi-search" label="Search" outlined/>
+        </SearchDialog>
+      </template>
+
       <template #end>
         <ToggleButton v-model="disableKeyField" onLabel="Key field edit disabled" offLabel="Key field edit enabled" />
       </template>
@@ -58,6 +64,7 @@ import ToggleButton from 'primevue/togglebutton';
 import SidebarTree from '../components/SidebarTree.vue';
 import KeyEditor from '../components/keyEditor.vue';
 import {useToast} from 'primevue/usetoast';
+import SearchDialog from '../components/Dialog/SearchDialog.vue';
 
 
 const langsComposable = useLangs()

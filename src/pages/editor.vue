@@ -26,10 +26,10 @@
           <SidebarTree />
         </div>
       </div>
-      <div class="flex-1 p-4 bg-surface-900 rounded-md flex items-center justify-center flex-col">
+      <div class="flex-1 flex  p-4 bg-surface-900 rounded-md flex items-start justify-start flex-col">
         <template v-if="!Object.keys(selectedNodeKey).length">
-          <div class="text-surface-500 text-xl">
-            Please select an object in the sidebar
+          <div class="flex h-full w-full items-center text-center justify-center text-surface-500 text-xl">
+            <p>Please select an object in the sidebar</p>
           </div>
         </template>
 

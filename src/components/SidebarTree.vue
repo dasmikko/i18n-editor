@@ -3,6 +3,7 @@
   <RenameObjectDialog ref="renameDialog" :selectedNode="selectedNode"/>
   <MoveObjectDialog ref="moveDialog" :tree="langsTree" :selectedNode="selectedNode"/>
   <CopyObjectDialog ref="copyDialog" :tree="langsTree" :selectedNode="selectedNode"/>
+  <AddObjectDialog ref="addObjectDialog" :selectedNode="selectedNode"/>
 
   <Tree
     v-model:selection-keys="selectedNodeKey"
@@ -34,11 +35,13 @@ import { useConfirm } from "primevue/useconfirm";
 import MoveObjectDialog from './Dialog/moveObjectDialog.vue';
 import CopyObjectDialog from './Dialog/copyObjectDialog.vue';
 import NewObjectField from './newObjectField.vue';
+import AddObjectDialog from './Dialog/AddObjectDialog.vue';
 
 const confirm = useConfirm()
 const renameDialog = ref(null)
 const moveDialog = ref(null)
 const copyDialog = ref(null)
+const addObjectDialog = ref(null)
 const langsComposable = useLangs()
 const { selectedNodeKey } = useLangs()
 
@@ -121,6 +124,7 @@ const langsTree = computed(() => {
 const cm = ref(null);
 const selectedNode = ref();
 const contextMenuItems = [
+  { label: 'New object', icon: 'pi pi-fw pi-copy', command: () => addObjectDialog.value.show() },
   { label: 'Copy object', icon: 'pi pi-fw pi-copy', command: () => copyDialog.value.show() },
   { label: 'Rename object', icon: 'pi pi-fw pi-pencil', command: () => renameDialog.value.show() },
   { label: 'Move object', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show() },

@@ -32,7 +32,7 @@
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import {ref, watch} from 'vue';
+import {ref, watch, toRaw} from 'vue';
 import {useLangs} from '../../composables/useLangs';
 import _set from 'lodash/set';
 import _get from 'lodash/get';
@@ -66,7 +66,7 @@ const onClickCopy = () => {
 
   // Create the new language object
   const oldObj = _get(langComp.langObj.value, oldPath)
-  _set(langComp.langObj.value, newPath, oldObj)
+  _set(langComp.langObj.value, newPath, toRaw(oldObj))
   visible.value = false;
 }
 

@@ -24,18 +24,20 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from 'vue';
+import {computed, ref, toRaw, watch} from 'vue';
 import Tree from 'primevue/tree';
 import {useLangs} from '../composables/useLangs';
 import ContextMenu from 'primevue/contextmenu';
 import _unset from 'lodash/unset';
 import _set from 'lodash/set';
+import _get from 'lodash/get';
 import RenameObjectDialog from './Dialog/renameObjectDialog.vue';
 import { useConfirm } from "primevue/useconfirm";
 import MoveObjectDialog from './Dialog/moveObjectDialog.vue';
 import CopyObjectDialog from './Dialog/copyObjectDialog.vue';
 import NewObjectField from './newObjectField.vue';
 import AddObjectDialog from './Dialog/AddObjectDialog.vue';
+import {useToast} from 'primevue/usetoast';
 
 const confirm = useConfirm()
 const renameDialog = ref(null)
@@ -44,6 +46,7 @@ const copyDialog = ref(null)
 const addObjectDialog = ref(null)
 const langsComposable = useLangs()
 const { selectedNodeKey } = useLangs()
+const toast = useToast()
 
 const expandedKeys = ref([])
 
@@ -123,13 +126,64 @@ const langsTree = computed(() => {
 
 const cm = ref(null);
 const selectedNode = ref();
-const contextMenuItems = [
-  { label: 'New object', icon: 'pi pi-fw pi-copy', command: () => addObjectDialog.value.show() },
-  { label: 'Copy object', icon: 'pi pi-fw pi-copy', command: () => copyDialog.value.show() },
-  { label: 'Rename object', icon: 'pi pi-fw pi-pencil', command: () => renameDialog.value.show() },
-  { label: 'Move object', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show() },
-  { label: 'Delete object', icon: 'pi pi-fw pi-trash', command: () => deleteKey() }
-]
+const contextMenuItems = computed(() => {
+  let pasteItems = []
+
+  if (langsComposable.isCopying.value || langsComposable.isMoving.value) {
+    pasteItems.push({
+      label: 'Paste',
+      icon: 'pi pi-fw pi-clipboard',
+      command: () => {
+
+        if (langsComposable.isMoving.value) {
+          let objKey = langsComposable.oldMovePath.value.split('.')[langsComposable.oldMovePath.value.split('.').length - 1]
+          langsComposable.moveObject(`${selectedNode.value.key}.${objKey}`)
+          langsComposable.oldMovePath.value = null
+        } else {
+          langsComposable.pasteObject(selectedNode.value.key)
+        }
+
+        toast.add({
+          severity: 'success',
+          summary: 'Object pasted',
+          life: 3000
+        })
+
+        langsComposable.isCopying.value = false
+        langsComposable.isMoving.value = false
+
+      }
+    })
+
+  }
+
+  return [
+    ...pasteItems,
+    { label: 'New', icon: 'pi pi-fw pi-file', command: () => addObjectDialog.value.show() },
+    {
+      label: 'Copy',
+      icon: 'pi pi-fw pi-copy',
+      command: () => {
+        langsComposable.isCopying.value = true
+        langsComposable.copiedPath.value = selectedNode.value.key
+        langsComposable.copiedObject.value = _get(langsComposable.langObj.value, selectedNode.value.key)
+        toast.add({severity: 'success', summary: 'Info', detail: 'Copied!', life: 3000})
+      }
+    },
+    { label: 'Rename', icon: 'pi pi-fw pi-pencil', command: () => renameDialog.value.show() },
+    {
+      label: 'Move',
+      icon: 'pi pi-fw pi-arrows-h',
+      command: () => {
+        langsComposable.isMoving.value = true
+        let currentPath = Object.keys(selectedNodeKey.value)[0]
+        langsComposable.oldMovePath.value = currentPath
+        console.log(langsComposable.oldMovePath.value)
+      }
+    },
+    { label: 'Delete', icon: 'pi pi-fw pi-trash', command: () => deleteKey() }
+  ]
+})
 
 
 const onRowContextMenu = (event, node) => {

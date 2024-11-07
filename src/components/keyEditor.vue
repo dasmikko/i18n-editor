@@ -61,13 +61,13 @@ import NewKeyField from './newKeyField.vue';
 import InputText from 'primevue/inputtext';
 import ContextMenu from 'primevue/contextmenu';
 import _set from 'lodash/set';
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, toRaw, useTemplateRef} from 'vue';
 import _unset from 'lodash/unset';
 import {useLangs} from '../composables/useLangs';
 import _get from 'lodash/get';
 import {useConfirm} from 'primevue/useconfirm';
 import {useToast} from 'primevue/usetoast';
-import {useKeyModifier} from '@vueuse/core';
+import {useKeyModifier, useTemplateRefsList} from '@vueuse/core';
 import CopyKeyDialog from './Dialog/copyKeyDialog.vue';
 
 const langsComposable = useLangs()
@@ -144,10 +144,37 @@ const onCellEditComplete = (e) => {
 const cm = ref(null);
 const selectedRow = ref();
 const contextMenuItems = [
-  {label: 'Copy key path', icon: 'pi pi-fw pi-clipboard', command: () => copyKeyPath()},
-  {label: 'Copy key', icon: 'pi pi-fw pi-copy', command: () => copyDialog.value.show()},
-  {label: 'Move key', icon: 'pi pi-fw pi-arrows-h', command: () => moveDialog.value.show()},
-  {label: 'Delete key', icon: 'pi pi-fw pi-trash', command: () => deleteKey()}
+  {
+    label: 'Copy key path',
+    icon: 'pi pi-fw pi-clipboard',
+    command: () => copyKeyPath()
+  },
+  {
+    label: 'Copy',
+    icon: 'pi pi-fw pi-copy',
+    command: () => {
+      langsComposable.isCopying.value = true
+      let currentPath = Object.keys(selectedNodeKey.value)[0]
+      langsComposable.copiedPath.value = `${currentPath}.${selectedRow.value.key}`
+      let objToCopy = _get(langsComposable.langObj.value, langsComposable.copiedPath.value)
+      langsComposable.copiedObject.value = objToCopy
+      toast.add({severity: 'success', summary: 'Info', detail: 'Copied!', life: 3000})
+    }
+  },
+  {
+    label: 'Move',
+    icon: 'pi pi-fw pi-arrows-h',
+    command: () => {
+      langsComposable.isMoving.value = true
+      let currentPath = Object.keys(selectedNodeKey.value)[0]
+      langsComposable.oldMovePath.value = `${currentPath}.${selectedRow.value.key}`
+    }
+  },
+  {
+    label: 'Delete',
+    icon: 'pi pi-fw pi-trash',
+    command: () => deleteKey()
+  }
 ]
 
 
@@ -167,7 +194,12 @@ const copyKeyPath = (e) => {
     navigator.clipboard.writeText(fullPath)
   }
 
-  toast.add({ severity: 'success', summary: 'Info', detail: 'Key path copied!\n\nNote: If you hold down CTRL, you get the path with the function around it!', life: 5000 });
+  toast.add({
+    severity: 'success',
+    summary: 'Info',
+    detail: 'Key path copied!\n\nNote: If you hold down CTRL, you get the path with the function around it!',
+    life: 5000
+  });
 }
 
 const deleteKey = () => {

@@ -24,7 +24,6 @@ const newLineFocus = magickeys['Ctrl+Alt+N']
 const props = defineProps({
   tableRef: {
     type: Object,
-    required: true
   }
 })
 

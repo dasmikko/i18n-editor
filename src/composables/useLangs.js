@@ -1,6 +1,7 @@
-import {computed, ref} from 'vue'
+import {computed, ref, toRaw, markRaw} from 'vue'
 import _get from 'lodash/get.js'
 import _set from 'lodash/set.js'
+import _unset from 'lodash/unset';
 
 const filename = ref('i18n.json')
 const langObj = ref({})
@@ -11,6 +12,12 @@ const isMergingFiles = ref(false)
 
 const selectedNodeKey = ref({})
 const disableKeyField = ref(true)
+
+const isMoving = ref(false)
+const isCopying = ref(false)
+const copiedPath = ref(null)
+const copiedObject = ref(null)
+const oldMovePath = ref(null)
 
 export function useLangs () {
 
@@ -178,6 +185,22 @@ export function useLangs () {
     return buildTree(paths)
   })
 
+  const pasteObject = (newPath) => {
+    if (!copiedObject.value) return
+    if (!copiedPath.value) return
+    let copyKey = copiedPath.value.split('.')[copiedPath.value.split('.').length - 1]
+
+    _set(langObj.value, `${newPath}.${copyKey}`, JSON.parse(JSON.stringify(copiedObject.value)))
+
+  }
+
+
+
+  const moveObject = (newPath) => {
+    let oldObject = toRaw(_get(langObj.value, oldMovePath.value))
+    _set(langObj.value, newPath, oldObject)
+    _unset(langObj.value, oldMovePath.value)
+  }
 
 
   return {
@@ -195,6 +218,14 @@ export function useLangs () {
     selectedNodeKey,
     disableKeyField,
 
-    langsTree
+    langsTree,
+
+    isCopying,
+    isMoving,
+    copiedPath,
+    copiedObject,
+    pasteObject,
+    moveObject,
+    oldMovePath,
   }
 }

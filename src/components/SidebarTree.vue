@@ -220,15 +220,13 @@ watch(
       return
     }
 
-    expandedKeys.value = {}
+    //expandedKeys.value = {}
 
     let keyPath = newValKey?.split('.')
     keyPath?.forEach((key, index) => {
       let path = keyPath.slice(0, index + 1).join('.')
       expandedKeys.value[path] = true
     })
-
-
   }
 )
 </script>

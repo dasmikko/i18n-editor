@@ -34,6 +34,7 @@
     "vite": "6.3.5",
     "vite-plugin-pages": "0.33.0",
     "vite-plugin-vue-devtools": "7.7.6",
-    "cross-spawn": ">=7.0.5"
+    "cross-spawn": ">=7.0.5",
+    "@babel/helpers": ">=7.26.10"
   }
 }
